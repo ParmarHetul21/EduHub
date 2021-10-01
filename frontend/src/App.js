@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
-	return <div style={{ textAlign: "left" }}>EduHub</div>;
+	return <span style={{ textAlign: "center" }}>EduHub</span>;
 }
 
 export default App;

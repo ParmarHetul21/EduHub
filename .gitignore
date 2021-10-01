@@ -4,6 +4,7 @@ lib
 .Python
 pyvenv.cfg
 node_modules
+env
 .pnp
 .pnp.js
 

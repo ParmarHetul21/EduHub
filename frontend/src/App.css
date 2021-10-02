@@ -1,0 +1,73 @@
+
+#hb_image {
+    height: 600px;
+    width: 100%;
+    background-image: url("./icons/bg.png");
+    background-size: 100% 700px;
+    background-repeat: no-repeat;
+    position: relative;
+    top: 0;
+    left: 0;
+}
+  .white-text {
+ color: blue;
+}  
+.card-deck{
+    position: relative;
+    top: -50px;
+}
+.card-title{
+    text-align: center;
+}
+.card{
+    width:15rem;
+    height: 10rem;
+    padding: 1.5em .5em .5em;
+    border-radius: 2em;
+    text-align: center;
+    box-shadow: 5px 10px 50px rgba(0,0,0,.2);
+    
+}
+.card-img-top{
+    margin-left: auto;
+    margin-right: auto;
+    width: 30%;
+}
+body{
+    background-color: #F8F8FF;
+}
+.card-title{
+    font-size: 20px;
+}
+/* faculty */
+.cards-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+  .card img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+  .card-faculty{
+    margin: 0 0.5em;
+    box-shadow: 2px 6px 8px 0 rgba(22, 22, 26, 0.18);
+    border: none;
+    border-radius: 0;
+  }
+  .carousel-inner {
+    padding: 1em;
+  }
+  .carousel-control-prev,
+  .carousel-control-next {
+    background-color: #e1e1e1;
+    width: 5vh;
+    height: 5vh;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  @media (min-width: 768px) {
+    .card img {
+      height: 11em;
+    }
+  }

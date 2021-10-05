@@ -69,27 +69,32 @@ body {
     height: 11em;
   }
 }
+
 .f-align {
   justify-content: center;
 }
+
 .App {
   font-family: sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.footer {
+
+#sticky-footer {
   background-color: #1c2b4b;
 }
+
 .header {
   background-color: #1c2b4b;
 }
+
 .container-login {
   display: flex;
+  height: 700px;
   align-items: center;
-  justify-content: space-evenly
+  justify-content: center;
 }
-
 
 .image {
   flex-basis: 40%
@@ -97,7 +102,5 @@ body {
 
 .text {
   font-size: 20px;
-  padding-left: 20px;
-  
+  padding-left: 20px;  
 }
-

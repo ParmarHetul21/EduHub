@@ -1,7 +1,8 @@
 import { Component } from "react";
 import "../App.css";
 import EduHub from "../components/icons/ve-removebg-preview.png";
-import { Form, Button } from "react-bootstrap";
+import { Form } from "react-bootstrap";
+import { Link } from "react-router-dom";
 class Login extends Component {
 	render() {
 		return (
@@ -17,7 +18,7 @@ class Login extends Component {
 				</div>
 				<div class="text">
 					<Form>
-						<Form.Control
+						<input
 							size="lg"
 							type="text"
 							placeholder="Username"
@@ -28,8 +29,8 @@ class Login extends Component {
 								width: "300px",
 							}}
 						/>
-
-						<Form.Control
+						<br />
+						<input
 							size="lg"
 							type="password"
 							placeholder="Password"
@@ -37,20 +38,23 @@ class Login extends Component {
 								background: "#1c2b4b",
 								marginBottom: "15px",
 								color: "white",
+								width: "300px",
 							}}
 						/>
-
-						<input
-							className="btn btn-link"
-							type="submit"
-							value="Login"
-							style={{
-								marginLeft: "100px",
-								textDecoration: "None",
-								color: "black",
-								fontSize: "25px",
-							}}
-						/>
+						<br />
+						<Link to="/password">
+							<input
+								className="btn btn-link"
+								type="submit"
+								value="Login"
+								style={{
+									marginLeft: "100px",
+									textDecoration: "None",
+									color: "black",
+									fontSize: "25px",
+								}}
+							/>
+						</Link>
 					</Form>
 				</div>
 			</div>

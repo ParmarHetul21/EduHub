@@ -29,11 +29,17 @@ class Header extends Component {
 					<Navbar.Toggle aria-controls="basic-navbar-nav" />
 					<Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
 					<Nav className="mr-auto">
-						<Link className="h5 text-light" to="/">
+						<Link
+							className="h5 text-light text-decoration-none"
+							to="/"
+						>
 							Home
 						</Link>
 
-						<Link className="px-4 h5 text-light" to="/login">
+						<Link
+							className="px-4 h5 text-light text-decoration-none"
+							to="/login"
+						>
 							Login
 						</Link>
 						{/* <NavDropdown

@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { BrowserRouter as Router } from "react-router-dom";
+import {Link} from "react-router-dom";
 import {
   Navbar,
   Nav,
@@ -9,13 +9,16 @@ import {
   FormControl,
 } from "react-bootstrap";
 import EduHub from "../components/icons/Main_Logo.png";
-
+import Login from "../components/Login";
+import Body from "../components/Body";
+import Footer from "../components/Footer";
 import "../App.css";
+
 class Header extends Component {
   render() {
     return (
       <div>
-        <Router>
+
           <Navbar className="header" variant="dark" fixed="top">
             <Navbar.Brand href="#home" className="p-1">
               <img
@@ -30,12 +33,13 @@ class Header extends Component {
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
             <Nav className="mr-auto">
-              <Nav.Link className="h5 text-light" href="/">
+            <Link className="h5 text-light" to="/">
                 Home
-              </Nav.Link>
-              <Nav.Link className="px-4 h5 text-light" href="/">
+              </Link>
+             
+              <Link className="px-4 h5 text-light" to="/login">
                 Login
-              </Nav.Link>
+              </Link>
               {/* <NavDropdown
                 className="h5 text-light"
                 title="Dropdown"
@@ -55,7 +59,8 @@ class Header extends Component {
               </NavDropdown> */}
             </Nav>
           </Navbar>
-        </Router>
+  
+
       </div>
     );
   }

@@ -84,3 +84,20 @@ body {
 .header {
   background-color: #1c2b4b;
 }
+.container-login {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly
+}
+
+
+.image {
+  flex-basis: 40%
+}
+
+.text {
+  font-size: 20px;
+  padding-left: 20px;
+  
+}
+

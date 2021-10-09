@@ -16,8 +16,23 @@ class Body extends Component {
     return (
       <div>
         {/* Background Image */}
-        <div id="hb_image"></div>
-
+        <div className="containerText">
+          <div id="hb_image"></div>
+          <div className="input-group mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Recipient's username"
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
+            />
+            <div className="input-group-append">
+              <button className="btn btn-outline-secondary" type="button">
+                Button
+              </button>
+            </div>
+          </div>
+        </div>
         {/* Semester */}
         <div className="card-deck">
           <div className="container">

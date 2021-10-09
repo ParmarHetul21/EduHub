@@ -9,8 +9,14 @@ import "../App.css";
 
 class Header extends Component {
   state = {
-    isAdmin: true,
+    isAdmin: false,
+    isLoggedIn: false,
   };
+  componentDidMount() {
+    if (localStorage.getItem("token")) {
+      this.setState({ isLoggedIn: true });
+    }
+  }
   render() {
     return (
       <div>
@@ -74,6 +80,7 @@ class Header extends Component {
               <Link
                 className="px-4 h5 text-light text-decoration-none"
                 to="/login"
+                style={{ marginTop: "23px" }}
               >
                 Login
               </Link>

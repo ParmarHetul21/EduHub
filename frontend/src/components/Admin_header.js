@@ -28,10 +28,10 @@ class Admin_header extends Component {
 		this.props.history.push(path);
 	}
 
-	handleLogout = (e) => {
-		e.preventDefault();
-		localStorage.clear();
-	};
+	// handleLogout = (e) => {
+	// 	e.preventDefault();
+	// 	localStorage.clear();
+	// };
 
 	render() {
 		return (
@@ -53,110 +53,100 @@ class Admin_header extends Component {
 					<Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
 
 					<Nav className="mr-auto">
-						{this.state.isLoggedIn ? (
-							<>
-								<Link
-									className="h5 px-3 text-light  text-decoration-none py-4"
-									to="/"
-								>
-									Inquiries
-								</Link>
-								<Dropdown>
-									<Dropdown.Toggle
-										variant="success"
-										id="dropdown-basic"
-										style={{
-											backgroundColor: "transparent",
-											border: "none",
-											marginTop: "17px",
-											marginRight: "10px",
-										}}
-									>
-										<img
-											src={Addicon}
-											height="25px"
-											width="25px"
-											alt="User"
-										/>
-									</Dropdown.Toggle>
-
-									<Dropdown.Menu
-										className="text-decoration-none"
-										style={{
-											marginLeft: "-100px",
-										}}
-									>
-										<Dropdown.Item
-											className="text-decoration-none"
-											onClick={() =>
-												this.nextPath("/addsubjects")
-											}
-										>
-											Add Subjects
-										</Dropdown.Item>
-										<Dropdown.Item
-											className="text-decoration-none"
-											onClick={() =>
-												this.nextPath("/addusers")
-											}
-										>
-											Add Users
-										</Dropdown.Item>
-									</Dropdown.Menu>
-								</Dropdown>
-								<Dropdown>
-									<Dropdown.Toggle
-										variant="success"
-										id="dropdown-basic"
-										className="text-decoration-none"
-										style={{
-											backgroundColor: "transparent",
-											border: "none",
-											marginTop: "17px",
-											marginRight: "10px",
-										}}
-									>
-										<img
-											src={UserIcon}
-											height="25px"
-											width="25px"
-											alt="User"
-										/>
-									</Dropdown.Toggle>
-
-									<Dropdown.Menu
-										style={{ marginLeft: "-100px" }}
-										className="text-decoration-none"
-									>
-										<Dropdown.Item className="text-decoration-none">
-											{this.state.username}
-										</Dropdown.Item>
-										<Link
-											to="/"
-											onClick={(e) =>
-												this.handleLogout(e)
-											}
-											className="text-decoration-none"
-										>
-											<Dropdown.Item className="text-decoration-none">
-												Logout
-											</Dropdown.Item>
-										</Link>
-									</Dropdown.Menu>
-								</Dropdown>
-							</>
-						) : (
+						<>
 							<Link
-								className="px-4 h5 text-light text-decoration-none"
-								to="/login"
-								style={{
-									marginTop: "23px",
-									textDecoration: "none",
-								}}
+								className="h5 px-3 text-light  text-decoration-none py-4"
+								to="/"
 							>
-								Login
+								Inquiries
 							</Link>
-						)}
+							<Dropdown>
+								<Dropdown.Toggle
+									variant="success"
+									id="dropdown-basic"
+									style={{
+										backgroundColor: "transparent",
+										border: "none",
+										marginTop: "17px",
+										marginRight: "10px",
+									}}
+								>
+									<img
+										src={Addicon}
+										height="25px"
+										width="25px"
+										alt="User"
+									/>
+								</Dropdown.Toggle>
+
+								<Dropdown.Menu
+									className="text-decoration-none"
+									style={{
+										marginLeft: "-100px",
+									}}
+								>
+									<Dropdown.Item
+										className="text-decoration-none"
+										onClick={() =>
+											this.nextPath("/addsubjects")
+										}
+									>
+										Add Subjects
+									</Dropdown.Item>
+									<Dropdown.Item
+										className="text-decoration-none"
+										onClick={() =>
+											this.nextPath("/addusers")
+										}
+									>
+										Add Users
+									</Dropdown.Item>
+								</Dropdown.Menu>
+							</Dropdown>
+							<Dropdown>
+								<Dropdown.Toggle
+									variant="success"
+									id="dropdown-basic"
+									className="text-decoration-none"
+									style={{
+										backgroundColor: "transparent",
+										border: "none",
+										marginTop: "17px",
+										marginRight: "10px",
+									}}
+								>
+									<img
+										src={UserIcon}
+										height="25px"
+										width="25px"
+										alt="User"
+									/>
+								</Dropdown.Toggle>
+
+								<Dropdown.Menu
+									style={{ marginLeft: "-100px" }}
+									className="text-decoration-none"
+								>
+									<Dropdown.Item className="text-decoration-none">
+										{this.state.username}
+									</Dropdown.Item>
+
+									<Dropdown.Item
+										className="text-decoration-none"
+										onClick={() => {
+											localStorage.clear();
+										}}
+									>
+										<Link
+											to="/login"
+											className="text-decoration-none"
+										>
+											Logout
+										</Link>
+									</Dropdown.Item>
+								</Dropdown.Menu>
+							</Dropdown>
+						</>
 					</Nav>
 				</Navbar>
 			</div>

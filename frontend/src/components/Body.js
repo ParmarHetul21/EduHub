@@ -4,6 +4,7 @@ import Carousel from "react-elastic-carousel";
 import "../App.css";
 import female from "../components/icons/female.png";
 import male from "../components/icons/male.png";
+import search from "../components/icons/483356.png";
 const breakPoints = [
 	{ width: 1, itemsToShow: 1 },
 	{ width: 550, itemsToShow: 2 },
@@ -12,30 +13,51 @@ const breakPoints = [
 ];
 
 class Body extends Component {
+	onSearch() {
+		console.log("Clicked");
+	}
 	render() {
 		return (
 			<div>
 				{/* Background Image */}
 				<div className="containerText">
-					<div id="hb_image"></div>
-					<div className="input-group mb-3">
-						<input
-							type="text"
-							className="form-control"
-							placeholder="Recipient's username"
-							aria-label="Recipient's username"
-							aria-describedby="basic-addon2"
-						/>
-						<div className="input-group-append">
+					<div id="hb_image">
+						<div class="input-group ">
+							<div class="input-group-prepend">
+								<input
+									type="text"
+									class="form-control "
+									placeholder="Search"
+									aria-label="Search"
+									aria-describedby="basic-addon2"
+									style={{
+										marginTop: "200px",
+										marginLeft: "400px",
+										borderRadius: "25px",
+									}}
+								/>
+							</div>
 							<button
-								className="btn btn-outline-secondary"
+								class="btn"
 								type="button"
+								style={{
+									marginTop: "196px",
+									marginLeft: "345px",
+								}}
 							>
-								Button
+								<img
+									src={search}
+									height="25px"
+									width="25px"
+									onClick={this.onSearch}
+									alt="search"
+									style={{ borderColor: "transparent" }}
+								></img>
 							</button>
 						</div>
 					</div>
 				</div>
+
 				{/* Semester */}
 				<div className="card-deck">
 					<div className="container">

@@ -12,15 +12,6 @@ class Header extends Component {
 		isLoggedIn: false,
 	};
 
-	componentDidMount() {
-		// setTimeout(() => {
-		// 	if (localStorage.getItem("token")) {
-		// 		this.setState({ isLoggedIn: true });
-		// 	}
-		// }, 1000);
-		console.log(localStorage.getItem("username"));
-		console.log(localStorage.getItem("token"));
-	}
 	render() {
 		return (
 			<div>

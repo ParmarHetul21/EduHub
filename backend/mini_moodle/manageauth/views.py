@@ -1,10 +1,11 @@
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
-from rest_framework import permissions, status
+from rest_framework import permissions, serializers, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import UserSerializer, UserSerializerWithToken
+from .serializers import UserSerializer, UserSerializerWithToken, SubjectSerializer
+from .models import Subject
 
 
 @api_view(['GET'])
@@ -12,6 +13,23 @@ def current_user(request):
     serializer = UserSerializer(request.user)
     return Response(serializer.data)
 
+class SubjectList(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    @api_view(["POST"])
+    def Addsubjects(request):
+        serializer = SubjectSerializer(data=request.data)
+        if serializer.is_valid():
+            print("Data ",serializer)
+            serializer.save()
+        print(serializer.errors)
+        return Response(serializer.data)
+
+    @api_view(['GET'])
+    def showSubjects(request):
+        subject = Subject.objects.all()
+        serializers = SubjectSerializer(subject, many=True)
+        return Response(serializers.data)
 
 class UserList(APIView):
     permission_classes = (permissions.AllowAny,)

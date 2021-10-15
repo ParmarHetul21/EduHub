@@ -28,8 +28,8 @@ class SubjectList(APIView):
     @api_view(['GET'])
     def showSubjects(request):
         subject = Subject.objects.all()
-        serializers = SubjectSerializer(subject, many=True)
-        return Response(serializers.data)
+        serialize = SubjectSerializer(subject, many=True)
+        return Response(serialize.data)
 
 class UserList(APIView):
     permission_classes = (permissions.AllowAny,)

@@ -4,10 +4,11 @@ import semester from "../components/icons/semester.png";
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import { Redirect } from "react-router";
+import { Link } from "react-router-dom";
 
 class Admin_Home extends Component {
 	state = {
-		isAdmin: true,
+		isAdmin: false,
 		isLoggedIn: false,
 	};
 
@@ -151,9 +152,11 @@ class Admin_Home extends Component {
 													style={{ height: "100px" }}
 												>
 													<div className="card-body">
+													<Link to="/assignSubject">
 														<h5 className="card-title">
 															Mr.Steve
 														</h5>
+														</Link>
 													</div>
 												</div>
 											</div>

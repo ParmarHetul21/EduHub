@@ -11,6 +11,7 @@ import Password from "./components/Password";
 import AdminHeader from "./components/Admin_header";
 import Addsubjects from "./components/Addsubjects";
 import Addusers from "./components/Addusers";
+import AssignSubject from "./components/AssignSubject";
 
 class App extends Component {
 	render() {
@@ -53,6 +54,13 @@ class App extends Component {
 							<Addusers />
 							<Footer />
 						</Route>
+
+						<Route path="/assignSubject">
+							<AdminHeader />
+							<AssignSubject />
+							<Footer />
+						</Route>
+
 					</Switch>
 				</Router>
 			</div>

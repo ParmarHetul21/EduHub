@@ -39,3 +39,11 @@ class SubjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subject
         fields = "__all__"
+
+class FileUploadSerializer(serializers.Serializer):
+    file = serializers.FileField()
+
+class SaveFileSerializer(serializers.Serializer):
+    class Meta:
+        model = User
+        fields = "__all__"

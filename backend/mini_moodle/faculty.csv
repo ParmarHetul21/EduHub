@@ -1,0 +1,4 @@
+username,password,firstname,lastname,email,is_staff
+mx,Abcd@1234,mx,christian,demo@gmail.com,true
+aj,Abcd@1234,aj,jain,demo@gmail.com,true
+pj,Abcd@1234,pooja,ajwani,demo@gmail.com,true

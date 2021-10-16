@@ -81,6 +81,16 @@ class Header extends Component {
 								</Dropdown>
 							</>
 						) : (
+							<>
+							{localStorage.getItem("token")?
+							<Link
+							className="px-4 h5 text-light text-decoration-none"
+							to="/login"
+							onClick={()=>localStorage.clear()}
+							style={{ marginTop: "23px" }}
+						>
+							Logout
+						</Link>:
 							<Link
 								className="px-4 h5 text-light text-decoration-none"
 								to="/login"
@@ -88,6 +98,8 @@ class Header extends Component {
 							>
 								Login
 							</Link>
+						}
+						</>
 						)}
 					</Nav>
 				</Navbar>

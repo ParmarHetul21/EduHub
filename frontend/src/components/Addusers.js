@@ -10,7 +10,6 @@ import {
 class Addusers extends Component {
 	state = {
 		whichUserToAdd:"",
-		file:null
 	}
 
 	chooseUser = (e) => {
@@ -19,27 +18,29 @@ class Addusers extends Component {
 	}
 
 	handleFileChange = (e) => {
-		console.log(e.target.files)
-		this.setState({file:e.target.files[0]})
+		e.preventDefault();
+		this.setState({fileToUpload:e.target.files[0]})
 	}
 
 	addUser = (e) => {
 		e.preventDefault();
-		// let formData = new FormData();
-		// formData.append("file",this.state.file);
-		// let formData = {
-		// 	"file": this.state.file
-		// }
-		fetch("http://127.0.0.1:8000/auth/addStudents/",
+		let formData = new FormData();
+		formData.append("file",this.state.fileToUpload);
+		let url = "";
+		if(this.state.whichUserToAdd==="faculty"){
+			url = "http://127.0.0.1:8000/auth/addFaculties/";
+		}
+		else{
+			url = "http://127.0.0.1:8000/auth/addStudents/";
+		}
+		fetch(url,
 		{
 			method: 'POST',
 			headers: {
-			  'content-type': 'application/json',
 			  Authorization: `JWT ${localStorage.getItem("token")}`,
 			},
-			 
-		}
-		).then(res => res.json())
+			body: formData,	 
+		}).then(res => res.json())
 			.then(d => console.log(d))
 	}
 	
@@ -50,7 +51,7 @@ class Addusers extends Component {
 					<h4>Add Users</h4>
 				</div>
 				<div className="Login">
-					<Form>
+					<Form encType="">
 	 					<Form.Label>Select User</Form.Label>
 						<div>
 							<InputGroup className="mb-3 input-group-lg">

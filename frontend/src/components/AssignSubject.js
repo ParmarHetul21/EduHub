@@ -1,14 +1,21 @@
 import { Component } from "react";
 import { Row,Col,FloatingLabel,Form,Button } from "react-bootstrap";
 import "../App.css";
-
+import { withRouter } from "react-router";
 class AssignSubject extends Component{
+    
+    // componentDidMount(){
+    //     // var id = this.props.match.params;
+    //     console.log(this.props.match.params.username);
+    // }   
+
     render(){
+
         return<>
 
         <div className="text" style={{ height: "580px" }}>
 				<div className="bg_color_admin">
-					<h4>Mr Steve</h4>
+					<h4>{this.props.match.params.username}</h4>
 				</div>
                 <div className="container">
                     <Row className="d-flex justify-content-center">    
@@ -66,4 +73,4 @@ class AssignSubject extends Component{
     }
 
 }
-export default AssignSubject;
+export default withRouter(AssignSubject);

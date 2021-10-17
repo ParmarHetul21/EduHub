@@ -1,23 +1,42 @@
 import { Component } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
-import semester from "../components/icons/semester.png";
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
-
+import FilterStudBysem from "./FilterStudBySem";
 class Admin_Home extends Component {
 	state = {
-		isAdmin: false,
+		isToggle: true,
 		isLoggedIn: false,
+		faculty: [],
 	};
 
+	handleToggle = (e) => {
+		let data = e.target.innerText
+		if (data === "faculty") {
+			this.setState({isToggle: false})
+		} 
+		
+		if (data === "student") {
+			this.setState({isToggle: true})
+		}
+	}
+
+	componentDidMount(){
+		fetch("http://127.0.0.1:8000/auth/fetchFaculties/",{
+			method: 'GET',
+			headers: {
+		  		Authorization: `JWT ${localStorage.getItem("token")}`,
+			}
+		}).then((res) => res.json())
+		.then((data) => this.setState({faculty: data}, () => {
+			console.log(this.state.faculty)
+		}))
+	}
+
 	render() {
-		// if (this.state.isLoggedIn) {
-		// 	<Redirect to="/admin_home" />;
-		// } else {
-		// 	<Redirect to="/" />;
-		// }
+
 		return (
 			<>
 				{!localStorage.getItem("token") ? (
@@ -31,19 +50,21 @@ class Admin_Home extends Component {
 								marginLeft: "20px",
 							}}
 						>
+
 							<ToggleButtonGroup
 								type="checkbox"
 								style={{
 									justifyContent: "flex-start",
 								}}
+								
 							>
-								<ToggleButton id="tbg-btn-1" value={1}>
-									Student
+								<ToggleButton id="tbg-btn-1" value={"Student"} onClick={(e) => this.handleToggle(e)}>
+									student
 								</ToggleButton>
-								<ToggleButton id="tbg-btn-2" value={2}>
-									Faculties
+								<ToggleButton id="tbg-btn-2" value={"Faculty"} onClick={(e) => this.handleToggle(e)}>
+									faculty
 								</ToggleButton>
-							</ToggleButtonGroup>
+							</ToggleButtonGroup>								
 							<Dropdown>
 								<Dropdown.Toggle
 									variant="success"
@@ -65,78 +86,9 @@ class Admin_Home extends Component {
 								</Dropdown.Menu>
 							</Dropdown>
 						</div>
-						{this.state.isAdmin ? (
+						{this.state.isToggle ? (
 							<>
-								<div
-									style={{
-										height: "400px",
-										marginTop: "280px",
-									}}
-								>
-									{/* Student */}
-									<div className="card-deck">
-										<div className="container">
-											<div className="row">
-												<div className="col-sm">
-													<div className="card">
-														<img
-															className="card-img-top"
-															src={semester}
-															alt="Card cap"
-														/>
-														<div className="card-body">
-															<h5 className="card-title">
-																Semester - 1
-															</h5>
-														</div>
-													</div>
-												</div>
-												<div className="col-sm">
-													<div className="card">
-														<img
-															className="card-img-top"
-															src={semester}
-															alt="Card cap"
-														/>
-														<div className="card-body">
-															<h5 className="card-title">
-																Semester - 2
-															</h5>
-														</div>
-													</div>
-												</div>
-												<div className="col-sm">
-													<div className="card">
-														<img
-															className="card-img-top"
-															src={semester}
-															alt="Card cap"
-														/>
-														<div className="card-body">
-															<h5 className="card-title">
-																Semester - 3
-															</h5>
-														</div>
-													</div>
-												</div>
-												<div className="col-sm">
-													<div className="card">
-														<img
-															className="card-img-top"
-															src={semester}
-															alt="Card cap"
-														/>
-														<div className="card-body">
-															<h5 className="card-title">
-																Semester - 4
-															</h5>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+								<FilterStudBysem />
 							</>
 						) : (
 							<div
@@ -146,109 +98,23 @@ class Admin_Home extends Component {
 								<div className="card-deck">
 									<div className="container">
 										<div className="row">
-											<div className="col-sm">
+											{this.state.faculty.map((d)=>(
+										<div className="col-sm" key={d.id}>
 												<div
 													className="card"
 													style={{ height: "100px" }}
 												>
 													<div className="card-body">
-													<Link to="/assignSubject">
+													<Link to={`/assignSubject/${d.username}`}>
 														<h5 className="card-title">
-															Mr.Steve
+														{d.username}
 														</h5>
 														</Link>
 													</div>
 												</div>
 											</div>
-											<div className="col-sm">
-												<div
-													className="card"
-													style={{ height: "100px" }}
-												>
-													<div className="card-body">
-														<h5 className="card-title">
-															Mrs.Natasha
-														</h5>
-													</div>
-												</div>
-											</div>
-											<div className="col-sm">
-												<div
-													className="card"
-													style={{ height: "100px" }}
-												>
-													<div className="card-body">
-														<h5 className="card-title">
-															Mr.Tony
-														</h5>
-													</div>
-												</div>
-											</div>
-											<div className="col-sm">
-												<div
-													className="card"
-													style={{ height: "100px" }}
-												>
-													<div className="card-body">
-														<h5 className="card-title">
-															Mrs.Wanda
-														</h5>
-													</div>
-												</div>
-											</div>
-										</div>
-										<div
-											className="row"
-											style={{ marginTop: "40px" }}
-										>
-											<div className="col-sm">
-												<div
-													className="card"
-													style={{ height: "100px" }}
-												>
-													<div className="card-body">
-														<h5 className="card-title">
-															Mr.rommm
-														</h5>
-													</div>
-												</div>
-											</div>
-											<div className="col-sm">
-												<div
-													className="card"
-													style={{ height: "100px" }}
-												>
-													<div className="card-body">
-														<h5 className="card-title">
-															Mr.sejojo
-														</h5>
-													</div>
-												</div>
-											</div>
-											<div className="col-sm">
-												<div
-													className="card"
-													style={{ height: "100px" }}
-												>
-													<div className="card-body">
-														<h5 className="card-title">
-															Mrs.Demo
-														</h5>
-													</div>
-												</div>
-											</div>
-											<div className="col-sm">
-												<div
-													className="card"
-													style={{ height: "100px" }}
-												>
-													<div className="card-body">
-														<h5 className="card-title">
-															Mr.Data
-														</h5>
-													</div>
-												</div>
-											</div>
+									))}
+											
 										</div>
 									</div>
 								</div>

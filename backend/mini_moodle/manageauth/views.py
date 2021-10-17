@@ -13,6 +13,12 @@ def current_user(request):
     serializer = UserSerializer(request.user)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def fetchFaculty(request):
+    faculty = User.objects.filter(is_staff=True,is_superuser=False)
+    serializer = UserSerializer(faculty, many=True)
+    return Response(serializer.data)
+
 class SubjectList(APIView):
     permission_classes = (permissions.AllowAny,)
 
@@ -79,7 +85,7 @@ class UploadFileViewForFaculty(generics.CreateAPIView):
                 first_name=row["firstname"],
                 last_name=row["lastname"],
                 email=row["email"],
-                is_staff=row["is_staff"]
+                is_staff=True
             )
             new_file.save()
         return Response({"status":"success"})

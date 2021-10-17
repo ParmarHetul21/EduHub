@@ -55,7 +55,7 @@ class App extends Component {
 							<Footer />
 						</Route>
 
-						<Route path="/assignSubject">
+						<Route path="/assignSubject/:username">
 							<AdminHeader />
 							<AssignSubject />
 							<Footer />

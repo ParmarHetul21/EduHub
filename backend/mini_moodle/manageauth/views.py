@@ -1,11 +1,12 @@
+from datetime import date
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
 from rest_framework import permissions, serializers, status, generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import UserSerializer, UserSerializerWithToken, SubjectSerializer, FileUploadSerializer
-from .models import Subject
+from .serializers import SubjectAllocationSerializer, UserSerializer, UserSerializerWithToken, SubjectSerializer, FileUploadSerializer
+from .models import Subject, SubjectAllocation
 import os, csv, pandas as pd
 
 @api_view(['GET'])
@@ -18,6 +19,25 @@ def fetchFaculty(request):
     faculty = User.objects.filter(is_staff=True,is_superuser=False)
     serializer = UserSerializer(faculty, many=True)
     return Response(serializer.data)
+
+class SubjectAllocationList(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    @api_view(["POST"])
+    def AllocateSubject(request):
+        serializer = SubjectAllocationSerializer(data=request.data)
+        if serializer.is_valid():
+            print("Data ",serializer)
+            serializer.save()
+        print(serializer.errors)
+        return Response(serializer.data)
+    
+    @api_view(["GET"])
+    def ShowAllocatedSubject(request):
+        data = SubjectAllocation.objects.all()
+        serializer = SubjectAllocationSerializer(data,many=True)
+        return Response(serializer.data)
+        
 
 class SubjectList(APIView):
     permission_classes = (permissions.AllowAny,)

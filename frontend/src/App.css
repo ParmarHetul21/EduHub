@@ -175,14 +175,24 @@ body {
   text-align: center;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
+.faculty-subjectCard-header {
+  display: flex;
+  width: 1200px;
+  margin-right: 100px;
+  margin-left: 110px;
+  padding: 5px;
+  border-bottom: 1px solid black;
+}
 
 .faculty-subjectCard {
   display: flex;
+  width: 1200px;
   margin-right: 100px;
-  margin-left: 50px;
+  margin-left: 110px;
   border-radius: 25px;
-  padding: 10px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  margin-top: 10px;
+  /* box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); */
 }
 
 .faculty_subject_card2 {

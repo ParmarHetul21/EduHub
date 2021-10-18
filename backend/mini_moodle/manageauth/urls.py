@@ -1,5 +1,6 @@
+from os import name
 from django.urls import path
-from .views import current_user, UserList, SubjectList, UploadFileView, UploadFileViewForFaculty, fetchFaculty
+from .views import current_user, UserList, SubjectList, UploadFileView, UploadFileViewForFaculty, fetchFaculty,SubjectAllocationList
 
 urlpatterns = [
     path('current_user/', current_user, name="currentUser"),
@@ -8,5 +9,7 @@ urlpatterns = [
     path("showsubject/", SubjectList.showSubjects, name="showSubject"),
     path('addStudents/',UploadFileView.as_view(), name='uploadFileForStudents'),
     path('addFaculties/',UploadFileViewForFaculty.as_view(), name='uploadFileForFaculties'),
-    path('fetchFaculties/',fetchFaculty, name="Fetch Faculty")
+    path('fetchFaculties/',fetchFaculty, name="Fetch Faculty"),
+    path('allocateSubjects/',SubjectAllocationList.AllocateSubject,name="allocateSubjects"),
+    path('showallocateSubjects/',SubjectAllocationList.ShowAllocatedSubject,name="showAllocateSubjects")
 ]

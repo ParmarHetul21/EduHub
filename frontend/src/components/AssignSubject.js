@@ -4,6 +4,8 @@ import "../App.css";
 import { withRouter } from "react-router";
 import Update from "../components/icons/Update.png";
 import Delete from "../components/icons/Delete.png";
+import Modal from "react-bootstrap/Modal";
+
 class AssignSubject extends Component {
   state = {
     subjects: [],
@@ -11,18 +13,22 @@ class AssignSubject extends Component {
     selectedsubject: null,
     uid: this.props.match.params.username.toString().split(":")[1],
     allocateSubjects: [],
+    fetchedSubjects: [],
   };
 
-  componentDidMount() {
-    fetch("http://127.0.0.1:8000/auth/showsubject/", {
+  async componentDidMount() {
+    await fetch("http://127.0.0.1:8000/auth/showsubject/", {
       method: "GET",
       headers: {
         Authorization: `JWT ${localStorage.getItem("token")}`,
       },
     })
       .then((res) => res.json())
-      .then((data) => this.setState({ subjects: data }));
-    fetch("http://127.0.0.1:8000/auth/showallocateSubjects/", {
+      .then((data) => {
+        console.log(data);
+        this.setState({ subjects: data });
+      });
+    await fetch("http://127.0.0.1:8000/auth/showallocateSubjects/", {
       method: "GET",
       headers: {
         Authorization: `JWT ${localStorage.getItem("token")}`,
@@ -30,6 +36,20 @@ class AssignSubject extends Component {
     })
       .then((res) => res.json())
       .then((data) => this.setState({ allocateSubjects: data }));
+
+    await fetch(`http://localhost:8000/auth/fetchSubject/${this.state.uid}`, {
+      method: "GET",
+      headers: {
+        Authorization: `JWT ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        this.setState({ fetchedSubjects: data }, () => {
+          console.log(this.state.fetchedSubjects);
+        });
+      })
+      .catch((error) => console.error(error));
   }
 
   handleChange = (e) => {
@@ -39,20 +59,26 @@ class AssignSubject extends Component {
   };
 
   handleSubjectChange = (e) => {
-    let s = this.state.subjects.filter((d) => d.subjectname === e.target.value);
+    let s = this.state.subjects.filter((d) => d.subjectname == e.target.value);
     s.map((d) => {
-      this.setState({
-        selectedsubject: d.id,
-      });
+      this.setState(
+        {
+          selectedsubject: d.id,
+        },
+        () => {
+          console.log("selectedsubject" + this.state.selectedsubject);
+        }
+      );
     });
   };
 
   allocateSubject = (e) => {
     console.log(this.state.selectedsemester);
     let formData = new FormData();
+
     formData.append("userID", this.state.uid);
     formData.append("subjectID", this.state.selectedsubject);
-
+    console.log("State" + this.state.selectedsubject);
     fetch("http://127.0.0.1:8000/auth/allocateSubjects/", {
       method: "POST",
       headers: {
@@ -62,8 +88,22 @@ class AssignSubject extends Component {
     })
       .then((res) => console.log(res))
       .catch((error) => console.log(error));
+    setTimeout(() => {
+      fetch(`http://localhost:8000/auth/fetchSubject/${this.state.uid}`, {
+        method: "GET",
+        headers: {
+          Authorization: `JWT ${localStorage.getItem("token")}`,
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          this.setState({ fetchedSubjects: data }, () => {
+            console.log(this.state.fetchedSubjects);
+          });
+        })
+        .catch((error) => console.error(error));
+    }, 100);
   };
-
   render() {
     let data = this.state.subjects.filter(
       (d) => d.semester.toString() === this.state.selectedsemester.toString()
@@ -112,6 +152,9 @@ class AssignSubject extends Component {
                     aria-label="Floating label select example"
                     onChange={(e) => this.handleSubjectChange(e)}
                   >
+                    <option selected disabled hidden>
+                      Select
+                    </option>
                     {data.map((s) => (
                       <option value={s.subjectname} key={s.id}>
                         {s.subjectname}
@@ -143,34 +186,28 @@ class AssignSubject extends Component {
 
             <div style={{ flex: 0, marginRight: "20px" }}>Delete</div>
           </div>
+          {this.state.fetchedSubjects.map((e) => (
+            <div className="faculty-subjectCard">
+              {e.map((f) => (
+                <>
+                  <div style={{ flex: 1, marginLeft: "20px" }}>
+                    {f.subjectname}
+                  </div>
 
-          <div className="faculty-subjectCard">
-            <div style={{ flex: 1, marginLeft: "20px" }}>Data Science</div>
+                  <div style={{ flex: 1.03 }}>Semester-{f.semester}</div>
 
-            <div style={{ flex: 1.03 }}>Semester-1</div>
+                  <div style={{ flex: 0, marginRight: "80px" }}>
+                    <img src={Update} width="25" height="25" alt="Logo" />
+                  </div>
 
-            <div style={{ flex: 0, marginRight: "80px" }}>
-              <img src={Update} width="25" height="25" alt="Logo" />
+                  <div style={{ flex: 0, marginRight: "30px" }}>
+                    {" "}
+                    <img src={Delete} width="25" height="25" alt="Logo" />
+                  </div>
+                </>
+              ))}
             </div>
-
-            <div style={{ flex: 0, marginRight: "30px" }}>
-              {" "}
-              <img src={Delete} width="25" height="25" alt="Logo" />
-            </div>
-          </div>
-          <div className="faculty-subjectCard">
-            <div style={{ flex: 1, marginLeft: "20px" }}>Data Science</div>
-
-            <div style={{ flex: 1.03 }}>Semester-1</div>
-
-            <div style={{ flex: 0, marginRight: "80px" }}>
-              <img src={Update} width="25" height="25" alt="Logo" />
-            </div>
-
-            <div style={{ flex: 0, marginRight: "30px" }}>
-              <img src={Delete} width="25" height="25" alt="Logo" />
-            </div>
-          </div>
+          ))}
         </div>
       </>
     );

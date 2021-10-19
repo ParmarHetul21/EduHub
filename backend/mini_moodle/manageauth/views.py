@@ -37,7 +37,16 @@ class SubjectAllocationList(APIView):
         data = SubjectAllocation.objects.all()
         serializer = SubjectAllocationSerializer(data,many=True)
         return Response(serializer.data)
-        
+    
+    @api_view(["GET"])
+    def fetchSubject(request, id):
+        data_list = []
+        data = SubjectAllocation.objects.filter(userID=id)
+        serializers = SubjectAllocationSerializer(data, many=True)
+        for i in serializers.data:
+            subject_serialazed = SubjectSerializer(Subject.objects.filter(id=i["subjectID"]), many=True)
+            data_list.append(subject_serialazed.data)
+        return Response(data_list)
 
 class SubjectList(APIView):
     permission_classes = (permissions.AllowAny,)

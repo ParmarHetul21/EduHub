@@ -9,6 +9,8 @@ class Subject(models.Model):
 
     def __str__(self):
         return self.subjectname
+
+
     
 class SubjectAllocation(models.Model):
     userID = models.ForeignKey(User,on_delete=models.CASCADE,default=True)

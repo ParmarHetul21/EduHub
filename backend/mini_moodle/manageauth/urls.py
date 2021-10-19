@@ -11,5 +11,6 @@ urlpatterns = [
     path('addFaculties/',UploadFileViewForFaculty.as_view(), name='uploadFileForFaculties'),
     path('fetchFaculties/',fetchFaculty, name="Fetch Faculty"),
     path('allocateSubjects/',SubjectAllocationList.AllocateSubject,name="allocateSubjects"),
-    path('showallocateSubjects/',SubjectAllocationList.ShowAllocatedSubject,name="showAllocateSubjects")
+    path('showallocateSubjects/',SubjectAllocationList.ShowAllocatedSubject,name="showAllocateSubjects"),
+    path("fetchSubject/<int:id>", SubjectAllocationList.fetchSubject, name="AllocatedSubjects")
 ]

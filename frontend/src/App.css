@@ -83,6 +83,10 @@ body {
 
 #sticky-footer {
   background-color: #1c2b4b;
+  position: fixed;
+  width: 100%;
+  display: inline-block;
+  bottom: 0;
 }
 
 .header {
@@ -192,9 +196,12 @@ body {
   border-radius: 25px;
   padding: 5px;
   margin-top: 10px;
+  overflow-y: scroll;
   /* box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); */
 }
-
+.faculty-subjectCard::-webkit-scrollbar {
+  display: none;
+}
 .faculty_subject_card2 {
   margin-top: -15px;
   margin-right: 450px;

@@ -5,8 +5,8 @@ from rest_framework import permissions, serializers, status, generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import SubjectAllocationSerializer, UserSerializer, UserSerializerWithToken, SubjectSerializer, FileUploadSerializer
-from .models import Subject, SubjectAllocation
+from .serializers import SubjectAllocationSerializer, UserSerializer, UserSerializerWithToken, SubjectSerializer, FileUploadSerializer, StudentProfileSerializer
+from .models import Subject, SubjectAllocation, StudentProfile
 import os, csv, pandas as pd
 
 @api_view(['GET'])
@@ -19,6 +19,24 @@ def fetchFaculty(request):
     faculty = User.objects.filter(is_staff=True,is_superuser=False)
     serializer = UserSerializer(faculty, many=True)
     return Response(serializer.data)
+
+#for fetching student from User table
+@api_view(['GET'])
+def fetchStudents(request):
+    data_list = []
+    semester_list = []
+    student = User.objects.filter(is_staff=False,is_superuser=False)
+    serializer = UserSerializer(student, many=True)    
+    for i in serializer.data:
+        data_list.append(i)            
+        student_serializer = StudentProfileSerializer(StudentProfile.objects.filter(username=i["username"]), many=True)
+        for j in student_serializer.data:
+            for i in data_list:
+                print(i["username"])
+                print(j["username"])
+                if(i["username"] == j["username"]):                
+                    i["semester"] = j["semester"]    
+    return Response(data_list)
 
 class SubjectAllocationList(APIView):
     permission_classes = (permissions.AllowAny,)
@@ -95,6 +113,11 @@ class UploadFileView(generics.CreateAPIView):
                 last_name=row["lastname"],
                 email=row["email"]
             )
+            user = StudentProfile(
+                username=row["username"],
+                semester=row["semester"]
+            )
+            user.save()
             new_file.save()
         return Response({"status":"success"})
 

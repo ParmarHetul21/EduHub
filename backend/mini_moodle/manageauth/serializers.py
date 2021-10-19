@@ -1,13 +1,19 @@
 from rest_framework import serializers
 from rest_framework_jwt.settings import api_settings
 from django.contrib.auth.models import User
-from .models import Subject, SubjectAllocation
+from .models import Subject, SubjectAllocation, StudentProfile
 
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
         fields = ('username','id','email','is_superuser','is_staff')
+
+class StudentProfileSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = StudentProfile
+        fields = "__all__"
 
 class UserSerializerWithToken(serializers.ModelSerializer):
 

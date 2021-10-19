@@ -1,6 +1,7 @@
-username,password,firstname,lastname,email
-vishwa,Abcd@1234,vishwa,sonar,demo@gmail.com
-bhumik,Abcd@1234,bhumik,xyz,demo@gmail.com
-vidhi,Abcd@1234,vidhi,parmar,demo@gmail.com
-hetul,Abcd@1234,hetul,parmar,demo@gmail.com
-dhwani,Abcd@1234,dhwani,karkar,demo@gmail.com
+username,password,firstname,lastname,email,semester
+vishwa,Abcd@1234,vishwa,sonar,demo@gmail.com,1
+bhumik,Abcd@1234,bhumik,xyz,demo@gmail.com,2
+vidhi,Abcd@1234,vidhi,parmar,demo@gmail.com,4
+hetul,Abcd@1234,hetul,parmar,demo@gmail.com,3
+dhwani,Abcd@1234,dhwani,karkar,demo@gmail.com,3
+kwinsi,Abcd@1234,kwinsi,sadhu,demo@gmail.com,4

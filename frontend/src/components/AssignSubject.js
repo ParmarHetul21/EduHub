@@ -108,18 +108,11 @@ class AssignSubject extends Component {
     let data = this.state.subjects.filter(
       (d) => d.semester.toString() === this.state.selectedsemester.toString()
     );
-    let alsubs = this.state.allocateSubjects.filter(
-      (i) => i.userID == this.state.uid
-    );
+    
     return (
       <>
         <div className="text" style={{ height: "580px" }}>
           <div className="bg_color_admin">
-            {/* <h1>
-              {alsubs.map((d) => (
-                <h1>{d.id}</h1>
-              ))}
-            </h1> */}
             <h2>{this.props.match.params.username.toString().split(":")[0]}</h2>
           </div>
           <div className="container">

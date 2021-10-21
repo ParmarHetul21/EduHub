@@ -107,13 +107,14 @@ class Admin_Home extends Component {
                       {this.state.faculty.map((d) => (
                         <div className="col-sm" key={d.id}>
                           <div className="card" style={{ height: "100px" }}>
-                            <div className="card-body">
                               <Link
-                                to={`/assignSubject/${d.username + ":" + d.id}`}
+                                to={`/assignSubject/${d.username + ":" + d.id}`} 
+                                style={{textDecoration:"none",color:"black"}}
                               >
-                                <h4 className="card-title">{d.username}</h4>
-                              </Link>
+                                <div className="card-body">
+                                <h4 className="card-title" >{d.username}</h4>
                             </div>
+                              </Link>
                           </div>
                         </div>
                       ))}

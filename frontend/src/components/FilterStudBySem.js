@@ -1,7 +1,11 @@
 import { Component } from "react";
+import { Link } from "react-router-dom";
 import semester from "../components/icons/semester.png";
 
 class FilterStudBysem extends Component {
+    state = {
+        semesters:[1,2,3,4],
+    }
     render(){
         return <>
         <div
@@ -11,10 +15,12 @@ class FilterStudBysem extends Component {
         }}
     >
         {/* Student */}
-        <div className="card-deck">
+        <div className="card-deck" onClick="">
             <div className="container">
                 <div className="row">
-                    <div className="col-sm">
+                    {this.state.semesters.map(s => (
+                        <div className="col-sm">
+                            <Link to = {`/filterStudent/${s}`} style={{textDecoration:"none",color:"black"}}>
                         <div className="card">
                             <img
                                 className="card-img-top"
@@ -23,12 +29,15 @@ class FilterStudBysem extends Component {
                             />
                             <div className="card-body">
                                 <h5 className="card-title">
-                                    Semester - 1
+                                    {`Semester - ${s}`}
                                 </h5>
                             </div>
                         </div>
+                    </Link>
                     </div>
-                    <div className="col-sm">
+                    ))}
+                    
+                    {/* <div className="col-sm">
                         <div className="card">
                             <img
                                 className="card-img-top"
@@ -68,8 +77,8 @@ class FilterStudBysem extends Component {
                                     Semester - 4
                                 </h5>
                             </div>
-                        </div>
-                    </div>
+                        </div> */}
+                    {/* </div> */}
                 </div>
             </div>
         </div>

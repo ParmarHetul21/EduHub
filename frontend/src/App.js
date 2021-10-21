@@ -12,6 +12,7 @@ import AdminHeader from "./components/Admin_header";
 import Addsubjects from "./components/Addsubjects";
 import Addusers from "./components/Addusers";
 import AssignSubject from "./components/AssignSubject";
+import FilterStudent from "./components/FilterStudent";
 
 class App extends Component {
   render() {
@@ -60,6 +61,13 @@ class App extends Component {
               <AssignSubject />
               <Footer />
             </Route>
+
+            <Route path="/filterStudent/:semester">
+              <AdminHeader />
+              <FilterStudent />
+              <Footer />
+            </Route>
+
           </Switch>
         </Router>
       </div>

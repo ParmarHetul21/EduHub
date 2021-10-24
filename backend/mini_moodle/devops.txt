@@ -1,0 +1,2 @@
+STATIC SITE GENERATORS AND THEIR BENEFITS
+A static site generator is a tool for generating static websites from HTML files. SSG automates the process of coding HTML pages and makes them ready to be displayed ahead of time. These generated HTML pages are pre-built which means that they can load very quickly.

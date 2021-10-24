@@ -5,14 +5,32 @@ import {
   InputGroup,
   DropdownButton,
   Dropdown,
+  Row,
+  Col,
+  FloatingLabel
 } from "react-bootstrap";
+import Update from "../components/icons/Update.png";
+import Delete from "../components/icons/Delete.png";
 
 class Addsubjects extends Component {
   state = {
     subjectname: "",
     course: "MCA",
     semester: 0,
+    subjects: []
   };
+
+  componentDidMount(){
+    fetch("http://localhost:8000/auth/showsubject/",{
+      method:"GET",
+      headers:{
+        Authorization: `JWT ${localStorage.getItem("token")}`,
+      }
+    }).then(res => res.json())
+        .then(data => this.setState({subjects: data},()=>{
+          console.log(this.state.subjects);
+        }))
+  }
 
   handlename = (e) => {
     this.setState({ subjectname: e.target.value });
@@ -20,8 +38,8 @@ class Addsubjects extends Component {
   };
 
   handlesemester = (e) => {
-    this.setState({ semester: e });
-    console.log(e);
+    this.setState({ semester: e.target.value });
+    console.log(e.target.value);
   };
 
   Addsubjects = (e, data) => {
@@ -54,61 +72,88 @@ class Addsubjects extends Component {
         <div className="bg_color_admin">
           <h4>Add Subjects</h4>
         </div>
-        <div className="Login">
-          <Form>
-            <Form.Group size="lg" controlId="email">
-              <Form.Label>subject name</Form.Label>
-              <Form.Control
-                autoFocus
-                type="text"
-                name="subjectname"
-                onChange={(e) => {
-                  this.handlename(e);
-                }}
-                required
-              />
-            </Form.Group>
-            <br />
-            <Form.Label>choose semester</Form.Label>
-            <div>
-              <InputGroup className="mb-3 input-group-lg">
-                <DropdownButton
-                  variant="outline-secondary"
-                  title="semester"
+        <Form className="container">
+          <Row>
+            <Col sm>
+            <Form.Floating className="mb-3">
+            <Form.Control
+            id="floatingInputCustom"
+            type="text"
+            placeholder="subject"
+            onChange={(e) => this.handlename(e)}
+            />
+            <label style={{color:"grey"}} htmlFor="floatingInputCustom">subject name</label>
+             </Form.Floating>
+            
+          
+            </Col>
+            
+
+            <Col sm>
+                <FloatingLabel
+                  controlId="floatingSelectGrid"
+                  label="Select Semester"
+                  style={{width:"220px"}}
+                >
+                  <Form.Select
+                    aria-label="Floating label select example"
+                    title="semester"
                   id="input-group-dropdown-2"
                   name="semester"
-                  onSelect={(e) => {
+                  onChange={(e) => {
                     this.handlesemester(e);
                   }}
                   required
+                  >
+                    <option value="1">semester-1</option>
+                    <option value="2">semester-2</option>
+                    <option value="3">semester-3</option>
+                    <option value="4">semester-4</option>
+                  </Form.Select>
+                </FloatingLabel>
+              </Col>
+
+              <Col sm>
+                <Button
+                  size="lg"
+                  type="submit"
+                  style={{marginTop:"4px"}}
+                  onClick={(e) => this.Addsubjects(e,this.state)}
                 >
-                  <Dropdown.Item href="#" eventKey="1">
-                    semester-1
-                  </Dropdown.Item>
-                  <Dropdown.Item href="#" eventKey="2">
-                    semester-2
-                  </Dropdown.Item>
-                  <Dropdown.Item href="#" eventKey="3">
-                    semester-3
-                  </Dropdown.Item>
-                  <Dropdown.Item href="#" eventKey="4">
-                    semester-4
-                  </Dropdown.Item>
-                </DropdownButton>
-              </InputGroup>
-            </div>
-            <br />
-            <div className="text-center">
-              <Button
-                size="lg"
-                type="submit"
-                onClick={(e) => this.Addsubjects(e, this.state)}
-              >
-                Add
-              </Button>
-            </div>
-          </Form>
-        </div>
+                  Add
+                </Button>
+              </Col>
+       </Row>
+      </Form>
+
+      <div className="faculty-subjectCard-header">
+            <div style={{ flex: 1, marginLeft: "20px" }}>Subject</div>
+
+            <div style={{ flex: 0.98 }}>Semester</div>
+
+            <div style={{ flex: 0, marginRight: "40px" }}>Update</div>
+
+            <div style={{ flex: 0, marginRight: "20px" }}>Delete</div>
+      </div>
+      
+
+      {this.state.subjects.map((s) => (
+          <div className="faculty-subjectCard" key={s.id}>
+            <div style={{ flex: 1, marginLeft: "20px" }}>{s.subjectname}</div>
+
+            <div style={{ flex: 0.98 }}>{s.semester}</div>
+
+            <div style={{ flex: 0, marginRight: "70px" }}>
+                    <img src={Update} width="25" height="25" alt="Logo" />
+                  </div>
+
+                  <div style={{ flex: 0, marginRight: "40px" }}>
+                    <img src={Delete} width="25" height="25" alt="Logo" />
+                  </div>
+          </div>
+      ))}
+      
+
       </div>
     );
   }

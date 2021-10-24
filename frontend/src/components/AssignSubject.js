@@ -86,8 +86,13 @@ class AssignSubject extends Component {
       },
       body: formData,
     })
-      .then((res) => console.log(res))
-      .catch((error) => console.log(error));
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.Failure) {
+          alert(data.Failure);
+        }
+      })
+      .catch((error) => alert(error));
     setTimeout(() => {
       fetch(`http://localhost:8000/auth/fetchSubject/${this.state.uid}`, {
         method: "GET",
@@ -104,11 +109,42 @@ class AssignSubject extends Component {
         .catch((error) => console.error(error));
     }, 100);
   };
+  deleteSubject = (e, userid, subjectid) => {
+    let formdata = new FormData();
+    formdata.append("userID", userid);
+    formdata.append("subjectID", subjectid);
+    fetch(
+      `http://localhost:8000/auth/deleteallocatedSubjects/${userid}/${subjectid}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `JWT ${localStorage.getItem("token")}`,
+        },
+        body: formdata,
+      }
+    )
+      .then((res) => console.log(res))
+      .then(() => {
+        fetch(`http://localhost:8000/auth/fetchSubject/${this.state.uid}`, {
+          method: "GET",
+          headers: {
+            Authorization: `JWT ${localStorage.getItem("token")}`,
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            this.setState({ fetchedSubjects: data }, () => {
+              console.log(this.state.fetchedSubjects);
+            });
+          })
+          .catch((error) => console.error(error));
+      });
+  };
   render() {
     let data = this.state.subjects.filter(
       (d) => d.semester.toString() === this.state.selectedsemester.toString()
     );
-    
+
     return (
       <>
         <div className="text" style={{ height: "580px" }}>
@@ -195,7 +231,16 @@ class AssignSubject extends Component {
 
                   <div style={{ flex: 0, marginRight: "30px" }}>
                     {" "}
-                    <img src={Delete} width="25" height="25" alt="Logo" />
+                    <img
+                      src={Delete}
+                      width="25"
+                      height="25"
+                      alt="Logo"
+                      onClick={(e) =>
+                        this.deleteSubject(e, this.state.uid, f.id)
+                      }
+                      style={{ cursor: "pointer" }}
+                    />
                   </div>
                 </>
               ))}

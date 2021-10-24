@@ -13,5 +13,6 @@ urlpatterns = [
     path('allocateSubjects/',SubjectAllocationList.AllocateSubject,name="allocateSubjects"),
     path('showallocateSubjects/',SubjectAllocationList.ShowAllocatedSubject,name="showAllocateSubjects"),
     path("fetchSubject/<int:id>", SubjectAllocationList.fetchSubject, name="AllocatedSubjects"),
-    path("fetchStudents/", fetchStudents, name="fetchstudents")
+    path("fetchStudents/", fetchStudents, name="fetchstudents"),
+    path("deleteallocatedSubjects/<int:userID>/<int:subjectID>",SubjectAllocationList.deleteAllocatedSubject, name="deleteallocatesubject")
 ]

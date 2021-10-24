@@ -1,5 +1,5 @@
 from datetime import date
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, response
 from django.contrib.auth.models import User
 from rest_framework import permissions, serializers, status, generics
 from rest_framework.decorators import api_view
@@ -45,8 +45,13 @@ class SubjectAllocationList(APIView):
     def AllocateSubject(request):
         serializer = SubjectAllocationSerializer(data=request.data)
         if serializer.is_valid():
-            print("Data ",serializer)
-            serializer.save()
+            userid = serializer.validated_data['userID']
+            subjectid = serializer.validated_data['subjectID']
+            allocatesubject = SubjectAllocation.objects.filter(userID = userid,subjectID = subjectid)
+            if not allocatesubject:
+                serializer.save()
+            else:
+                return Response({"Failure": ["Already Existed"]}, status=status.HTTP_400_BAD_REQUEST)
         print(serializer.errors)
         return Response(serializer.data)
     
@@ -65,6 +70,14 @@ class SubjectAllocationList(APIView):
             subject_serialazed = SubjectSerializer(Subject.objects.filter(id=i["subjectID"]), many=True)
             data_list.append(subject_serialazed.data)
         return Response(data_list)
+    
+    @api_view(["POST"])
+    def deleteAllocatedSubject(request, userID,subjectID):
+        user = SubjectAllocation.objects.get(userID=userID,subjectID=subjectID)
+        if user:
+            user.delete()
+            return Response({"status":"ok"}, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
 class SubjectList(APIView):
     permission_classes = (permissions.AllowAny,)
@@ -73,8 +86,12 @@ class SubjectList(APIView):
     def Addsubjects(request):
         serializer = SubjectSerializer(data=request.data)
         if serializer.is_valid():
-            print("Data ",serializer)
-            serializer.save()
+            subjectname = serializer.validated_data['subjectname']
+            addsubject = Subject.objects.filter(subjectname = subjectname)
+            if not addsubject:
+                serializer.save()
+            else:
+                return Response({"Failure": ["Already Existed"]}, status=status.HTTP_400_BAD_REQUEST)
         print(serializer.errors)
         return Response(serializer.data)
 

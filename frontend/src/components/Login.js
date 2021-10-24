@@ -32,6 +32,7 @@ class Login extends Component {
       .then((res) => res.json())
       .then((json) => {
         localStorage.setItem("token", json.token);
+        localStorage.setItem("id", json.user.id);
         localStorage.setItem("username", json.user.username);
         this.setState(
           {
@@ -67,7 +68,7 @@ class Login extends Component {
       if (this.state.is_superuser) {
         return <Redirect to="/admin_home" />;
       } else if (this.state.is_staff && !this.state.is_superuser) {
-        return <Redirect to="/faculty_home" />;	
+        return <Redirect to="/faculty_home" />;
       } else {
         return <Redirect to="/" />;
       }

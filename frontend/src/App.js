@@ -13,6 +13,7 @@ import Addsubjects from "./components/Addsubjects";
 import Addusers from "./components/Addusers";
 import AssignSubject from "./components/AssignSubject";
 import FilterStudent from "./components/FilterStudent";
+import FacultyHome from "./components/FacultyHome";
 
 class App extends Component {
   render() {
@@ -37,7 +38,7 @@ class App extends Component {
               <Password />
               <Footer />
             </Route>
-
+            {/* Admin  */}
             <Route path="/admin_home">
               <AdminHeader />
               <AdminHome />
@@ -68,6 +69,13 @@ class App extends Component {
               <Footer />
             </Route>
 
+            {/* Faculty */}
+
+            <Route path="/faculty_home">
+              <Header />
+              <FacultyHome />
+              <Footer />
+            </Route>
           </Switch>
         </Router>
       </div>

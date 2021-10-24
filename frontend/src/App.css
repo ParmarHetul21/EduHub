@@ -220,3 +220,21 @@ body {
   margin-right: 50px;
   width: 150px;
 }
+
+/* faculty */
+
+#faculty-sidebar {
+  float: left;
+  margin-top: 90px;
+  display: flex;
+  height: 620px;
+  flex-direction: column;
+  justify-content: space-around;
+  background-color: rgba(28, 43, 75, 0.2);
+  padding: 30px;
+}
+
+.sidebar-item :hover {
+  cursor: pointer;
+  color: red;
+}

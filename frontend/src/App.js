@@ -14,6 +14,7 @@ import Addusers from "./components/Addusers";
 import AssignSubject from "./components/AssignSubject";
 import FilterStudent from "./components/FilterStudent";
 import FacultyHome from "./components/FacultyHome";
+import Faculty_header from "./components/Faculty_header";
 
 class App extends Component {
   render() {
@@ -72,7 +73,7 @@ class App extends Component {
             {/* Faculty */}
 
             <Route path="/faculty_home">
-              <Header />
+              <Faculty_header />
               <FacultyHome />
               <Footer />
             </Route>

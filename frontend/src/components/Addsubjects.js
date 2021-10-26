@@ -1,14 +1,5 @@
 import { Component } from "react";
-import {
-  Form,
-  Button,
-  InputGroup,
-  DropdownButton,
-  Dropdown,
-  Row,
-  Col,
-  FloatingLabel,
-} from "react-bootstrap";
+import { Form, Button, Row, Col, FloatingLabel } from "react-bootstrap";
 import Update from "../components/icons/Update.png";
 import Delete from "../components/icons/Delete.png";
 
@@ -66,9 +57,49 @@ class Addsubjects extends Component {
       })
       .catch((error) => {
         console.log(error);
+      })
+      .then(() => {
+        fetch("http://localhost:8000/auth/showsubject/", {
+          method: "GET",
+          headers: {
+            Authorization: `JWT ${localStorage.getItem("token")}`,
+          },
+        })
+          .then((res) => res.json())
+          .then((data) =>
+            this.setState({ subjects: data }, () => {
+              console.log(this.state.subjects);
+            })
+          );
       });
   };
-
+  deleteSubject = (subjectid) => {
+    let formdata = new FormData();
+    formdata.append("subjectID", subjectid);
+    fetch(`http://localhost:8000/auth/deleteSubject/${subjectid}`, {
+      method: "POST",
+      headers: {
+        Authorization: `JWT ${localStorage.getItem("token")}`,
+      },
+      body: formdata,
+    })
+      .then((res) => console.log(res))
+      .then(() => {
+        fetch(`http://localhost:8000/auth/showsubject/`, {
+          method: "GET",
+          headers: {
+            Authorization: `JWT ${localStorage.getItem("token")}`,
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            this.setState({ subjects: data }, () => {
+              console.log(this.state.subjects);
+            });
+          })
+          .catch((error) => console.error(error));
+      });
+  };
   render() {
     return (
       <div className="text" style={{ height: "580px" }}>
@@ -107,6 +138,9 @@ class Addsubjects extends Component {
                   }}
                   required
                 >
+                  <option selected disabled hidden>
+                    Select
+                  </option>
                   <option value="1">semester-1</option>
                   <option value="2">semester-2</option>
                   <option value="3">semester-3</option>
@@ -149,7 +183,14 @@ class Addsubjects extends Component {
             </div>
 
             <div style={{ flex: 0, marginRight: "40px" }}>
-              <img src={Delete} width="25" height="25" alt="Logo" />
+              <img
+                src={Delete}
+                width="25"
+                height="25"
+                alt="Logo"
+                onClick={() => this.deleteSubject(s.id)}
+                style={{ cursor: "pointer" }}
+              />
             </div>
           </div>
         ))}

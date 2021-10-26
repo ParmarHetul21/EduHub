@@ -14,6 +14,7 @@ import Addusers from "./components/Addusers";
 import AssignSubject from "./components/AssignSubject";
 import FilterStudent from "./components/FilterStudent";
 import FacultyHome from "./components/FacultyHome";
+import FacultyUploadFile from "./components/FacultyUploadFile";
 import Faculty_header from "./components/Faculty_header";
 
 class App extends Component {
@@ -75,6 +76,11 @@ class App extends Component {
             <Route path="/faculty_home">
               <Faculty_header />
               <FacultyHome />
+              <Footer />
+            </Route>
+            <Route path="/faculty_file_upload">
+              <Faculty_header />
+              <FacultyUploadFile />
               <Footer />
             </Route>
           </Switch>

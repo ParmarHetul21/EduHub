@@ -5,9 +5,18 @@ from rest_framework import permissions, serializers, status, generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import SubjectAllocationSerializer, UserSerializer, UserSerializerWithToken, SubjectSerializer, FileUploadSerializer, StudentProfileSerializer
+from .serializers import SubjectAllocationSerializer, UserSerializer, UserSerializerWithToken, SubjectSerializer, FileUploadSerializer, StudentProfileSerializer,UserFileUploadSerializer
 from .models import Subject, SubjectAllocation, StudentProfile
 import os, csv, pandas as pd
+
+@api_view(['POST'])
+def uploadFile(request):
+    serializer = UserFileUploadSerializer(data = request.data)
+    if serializer.is_valid():
+        serializer.save()
+        print(serializer)
+    print(serializer.errors)
+    return Response("data inserted")
 
 @api_view(['GET'])
 def current_user(request):
@@ -100,6 +109,15 @@ class SubjectList(APIView):
         subject = Subject.objects.all()
         serialize = SubjectSerializer(subject, many=True)
         return Response(serialize.data)
+    
+    @api_view(['POST'])
+    def deleteSubjects(request,id):
+        subjectid = Subject.objects.get(id=id)
+        if subjectid:
+            subjectid.delete()
+            return Response({"status":"ok"}, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
 class UserList(APIView):
     permission_classes = (permissions.AllowAny,)

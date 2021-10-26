@@ -121,7 +121,9 @@ export default class FacultyHome extends Component {
                   <h2>Faculty</h2>
                 </ToggleButton>
               </ToggleButtonGroup>
+                  
             </div>
+
             <div
               style={{
                 marginTop: "25px",

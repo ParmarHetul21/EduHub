@@ -1,7 +1,9 @@
+from django.db import models
+from django.db.models import fields
 from rest_framework import serializers
 from rest_framework_jwt.settings import api_settings
 from django.contrib.auth.models import User
-from .models import Subject, SubjectAllocation, StudentProfile
+from .models import FileUpload, Subject, SubjectAllocation, StudentProfile
 
 class UserSerializer(serializers.ModelSerializer):
 
@@ -57,4 +59,9 @@ class FileUploadSerializer(serializers.Serializer):
 class SaveFileSerializer(serializers.Serializer):
     class Meta:
         model = User
+        fields = "__all__"
+    
+class UserFileUploadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FileUpload
         fields = "__all__"

@@ -1,0 +1,147 @@
+What is Jamstack?
+A.Architecture
+B.Language
+C.Framework
+D.Library
+
+ANSWER: A
+
+what is jam in jamstack
+A.Javascript,API,Model
+B.Java,API,Meta
+C.Javscript,API,Markup
+D.Javascript,Architecture,Markup
+
+ANSWER: C
+
+Is Jamstack approach for backend development?
+A.True
+B.False
+
+ANSWER: B
+
+Full form of SSG?
+A.Static Site Generator
+B.Site Static Generator
+C.Security Site Generator
+D.Statistics Site Generator
+
+ANSWER: A
+
+Full form of CDN?
+A.Content Deployment Network
+B.Content Delivery Network
+C.Continuous Delivery Network
+D.Code Delivery Network
+
+ANSWER: B
+
+In Jamstack no need of database is this statement is true?
+A.True
+B.False
+
+ANSWER: A
+
+Does Jamstack use web servers directly to generate html file?
+A.True
+B.False
+
+ANSWER: A
+
+Which of the following is/are the functionality of JamStack?
+A.Blazing fast
+B.Scalable
+C.Stable
+D.All of the given
+
+ANSWER: D
+
+PWAs supports only online application.
+A.True
+B.False
+
+ANSWER: B
+
+Jamstack website are highly stable.
+A.True
+B.False
+
+ANSWER: A
+
+There is no database concept so waiting time is become too short.
+A.True
+B.False
+
+ANSWER: A
+
+How to run Gatsby server?
+A.gatsby build
+B.gatsby develop
+C.gatsby init
+D.gatsby start
+
+ANSWER: B
+
+The core principle of Jamstack is ____.
+A.Pre-rendering
+B.Decoupling
+C.Both
+D.None of the above
+
+ANSWER: C
+
+What is MDX?
+A.Extension
+B.File
+C.Plugin
+D.Node
+
+ANSWER: A
+
+Full form of JSX?
+A.Java Extension
+B.Javascript Extension
+C.Javascript Executable
+D.Java Executable
+
+ANSWER: B
+
+Latest version of Gatsby?
+A.v2
+B.v3
+C.v4
+D.v1
+
+ANSWER: B
+
+What is Gatsby?
+A.Architecture
+B.Language
+C.Framework
+D.Library
+
+ANSWER: C
+
+Headless CMS is which type of content management system?
+A.Front-end
+B.Back-end
+C.Both
+D.None of the above
+
+ANSWER: B
+
+How does the Gatsby generates a HTML file?
+A.RunTime
+B.Load Time
+C.Build Time
+D.None of the above
+
+ANSWER: C
+
+Which of the following service allow portability and flexibility?
+A.Pre-rendering
+B.Decoupling
+C.Both
+D.None of the above
+
+ANSWER: B

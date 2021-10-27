@@ -34,6 +34,12 @@ class Login extends Component {
         localStorage.setItem("token", json.token);
         localStorage.setItem("id", json.user.id);
         localStorage.setItem("username", json.user.username);
+        if(json.user.is_staff===true){
+          localStorage.setItem("whichUser","faculty")
+        }
+        else{
+          localStorage.setItem("whichUser","student")
+        }
         this.setState(
           {
             logged_in: true,

@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import SubjectAllocationSerializer, UserSerializer, UserSerializerWithToken, SubjectSerializer, FileUploadSerializer, StudentProfileSerializer,UserFileUploadSerializer
-from .models import Subject, SubjectAllocation, StudentProfile
+from .models import Subject, SubjectAllocation, StudentProfile, FileUpload
 import os, csv, pandas as pd
 
 @api_view(['POST'])
@@ -19,6 +19,12 @@ def uploadFile(request):
     return Response("data inserted")
 
 @api_view(['GET'])
+def fetchFiles(request):
+    data = FileUpload.objects.all()
+    serializer = UserFileUploadSerializer(data, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
 def current_user(request):
     serializer = UserSerializer(request.user)
     return Response(serializer.data)
@@ -29,6 +35,7 @@ def fetchFaculty(request):
     serializer = UserSerializer(faculty, many=True)
     return Response(serializer.data)
 
+    
 #for fetching student from User table
 @api_view(['GET'])
 def fetchStudents(request):

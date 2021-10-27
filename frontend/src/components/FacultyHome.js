@@ -3,16 +3,18 @@ import "../App.css";
 import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 import ToggleButton from "react-bootstrap/ToggleButton";
 import { Redirect } from "react-router";
-
+import { InputGroup, DropdownButton, Dropdown } from "react-bootstrap";
 export default class FacultyHome extends Component {
   state = {
     semester: [1, 2, 3, 4],
     subjects: [],
     selectedsemester: 1,
     isUser: false,
+    selectedSubject: null,
+    checkedToggle:"",
+    files:[]
   };
   componentDidMount() {
-    // console.log(localStorage.getItem("token"));
     if (localStorage.getItem("id")) {
       var uid = localStorage.getItem("id");
     }
@@ -28,21 +30,54 @@ export default class FacultyHome extends Component {
           console.log(this.state.subjects)
         )
       );
+      fetch("http://localhost:8000/auth/fetchFiles/",{
+      method:"GET",
+      headers:{
+        Authorization: `JWT ${localStorage.getItem("token")}`
+      }
+    }).then(res => res.json())
+        .then(data => this.setState({files:data},()=>{
+          console.log(this.state.files)
+        }))
   }
+
   setSemester = (s) => {
     this.setState({ selectedsemester: s });
   };
-  handleToggleStudent = () => {
-    this.setState({ isUser: true });
+
+  handleToggleStudent = (e) => {
+    this.setState({ isUser: true, checkedToggle:"student"},()=>{
+      console.log(this.state.checkedToggle)
+    });
+    
   };
-  handleToggleFaculty = () => {
-    this.setState({ isUser: false });
+
+  handleToggleFaculty = (e) => {
+    this.setState({ isUser: false, checkedToggle:"faculty" });
   };
+
+  subjectFilter = (e) => {
+    this.setState({selectedSubject:e})
+  }
+
   render() {
     var data = [];
     this.state.subjects.map((s) => s.map((d) => data.push(d)));
     var fdata = data.filter((d) => d.semester == this.state.selectedsemester);
-
+    var files = []
+    var d = this.state 
+    if(d.checkedToggle === "faculty"){
+      files = d.files.filter(f => f.whichUser==="faculty")
+    }
+    else if(d.checkedToggle === "student"){
+      files = d.files.filter(f => f.whichUser==="student")
+    }
+    else if (d.selectedSubject !== null){
+      files = d.files.filter(f => parseInt(f.subjectID) === parseInt(d.selectedSubject))
+    }
+    else{
+      files = d.files
+    }
     return (
       <>
         {localStorage.getItem("token") == null ? (
@@ -56,32 +91,7 @@ export default class FacultyHome extends Component {
               flexDirection: "column",
             }}
           >
-            <div className="faculty-subject-card" style={{ position: "fixed" }}>
-              <div
-                className="f-card-deck"
-                style={{
-                  width: "1200px",
-                  marginTop: "20px",
-                  marginLeft: "280px",
-                  overflowX: "scroll",
-                  padding: "9px",
-                }}
-              >
-                <div className="container-fluid">
-                  <div className="row  flex-nowrap">
-                    {fdata.map((d) => (
-                      <div className="col-3" style={{ margin: "auto" }}>
-                        <div className="fcard" style={{ height: "100px" }}>
-                          <div className="card-body">
-                            <h4 className="f-card-title">{d.subjectname}</h4>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
+         
             <div id="faculty-sidebar">
               {this.state.semester.map((s) => (
                 <div className="sidebar-item">
@@ -91,117 +101,122 @@ export default class FacultyHome extends Component {
             </div>
             <div
               style={{
-                marginTop: "160px",
-                marginLeft: "680px",
+                marginTop: "20px",
+                marginLeft: "270px",
+                display:"flex",
+
               }}
             >
-              <ToggleButtonGroup type="checkbox">
-                <ToggleButton
-                  id="tbg-btn-1"
-                  value={"Student"}
-                  style={{
-                    height: "50px",
-                    width: "200px",
-                    backgroundColor: "#1c2b4b",
-                  }}
-                  onClick={(e) => this.handleToggleStudent(e)}
-                >
-                  <h2>Student</h2>
-                </ToggleButton>
+              <ToggleButtonGroup type="checkbox" >
+
+            {this.state.checkedToggle == "student" ? 
+            <ToggleButton
+
+            id="tbg-btn-1"
+            value={"Student"}
+            style={{
+              height: "36px",
+              width: "170px",
+              padding:"3px",
+              color:"white",
+              backgroundColor: "#1c2b4b",
+            }}
+
+            onClick={(e) => this.handleToggleStudent(e)}
+          >
+            <h4>Student</h4>
+          </ToggleButton> : 
+          <ToggleButton
+
+          id="tbg-btn-1"
+          value={"Student"}
+          style={{
+            height: "36px",
+            width: "170px",
+            padding:"3px",
+            color:"grey",
+            borderColor:"grey",
+            backgroundColor: "transparent",
+          }}
+
+          onClick={(e) => this.handleToggleStudent(e)}
+        >
+          <h4>Student</h4>
+        </ToggleButton>}
+                
+        {this.state.checkedToggle == "faculty" ?
+                     <ToggleButton
+                     id="tbg-btn-2"
+                     value={"Faculty"}
+                     style={{
+                       height: "36px",
+                       width: "170px",
+                       padding:"3px",
+                       color:"white",
+                       borderColor:"grey",
+                       backgroundColor: "#1c2b4b",
+                     }}
+                     onClick={(e) => this.handleToggleFaculty(e)}
+                   defaultChecked>
+                     <h4>Faculty</h4>
+                   </ToggleButton>:
                 <ToggleButton
                   id="tbg-btn-2"
                   value={"Faculty"}
                   style={{
-                    height: "50px",
-                    width: "200px",
-                    backgroundColor: "#1c2b4b",
+                    height: "36px",
+                    width: "170px",
+                    padding:"3px",
+                    color:"grey",
+                    borderColor:"grey",
+                    backgroundColor: "transparent",
                   }}
                   onClick={(e) => this.handleToggleFaculty(e)}
-                >
-                  <h2>Faculty</h2>
+                defaultChecked>
+                  <h4>Faculty</h4>
                 </ToggleButton>
+        }
               </ToggleButtonGroup>
-                  
+
+             
+                    <DropdownButton
+                      variant="outline-secondary"
+                      title="Subject Name"
+                      id="input-group-dropdown-2"
+                      style={{marginLeft:"8px"}}
+                      onSelect={(e)=>this.subjectFilter(e)}                      
+                    >
+                      {fdata.map((f) => (
+                        <Dropdown.Item eventKey={f.id}>
+                          {f.subjectname}
+                        </Dropdown.Item>
+                      ))}
+                    </DropdownButton>
+                 
             </div>
 
             <div
               style={{
-                marginTop: "25px",
-                marginLeft: "170px",
+                marginTop: "70px",
+                marginLeft: "260px",
               }}
             >
-              {this.state.isUser ? (
-                <div className="faculty-subjectCard-header">
-                  <div
-                    style={{
-                      flex: 1,
-                      marginLeft: "20px",
-                      fontWeight: "bold",
-                      fontSize: "20px",
-                    }}
-                  >
-                    File Name
+               <div className="card-deck">
+                  <div className="container">
+                    <div className="grid" id="grid">
+                            
+                        {files.map( f => (
+                            <div className="card" style={{ height: "100px" }}>
+                             
+                                <div className="card-body" style={{padding:"10px"}}>
+                                <h4 className="card-title" >{f.fileName.split(".")[0]}</h4>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <br></br>
                   </div>
-
-                  <div
-                    style={{ flex: 0.98, fontWeight: "bold", fontSize: "20px" }}
-                  >
-                    Upload Time
-                  </div>
-
-                  <div
-                    style={{
-                      flex: 0.2,
-                      marginRight: "40px",
-                      fontWeight: "bold",
-                      fontSize: "20px",
-                    }}
-                  >
-                    Accept
-                  </div>
-
-                  <div
-                    style={{
-                      flex: 0,
-                      marginRight: "20px",
-                      fontWeight: "bold",
-                      fontSize: "20px",
-                    }}
-                  >
-                    Reject
-                  </div>
-                </div>
-              ) : (
-                <div className="faculty-subjectCard-header">
-                  <div
-                    style={{
-                      flex: 1,
-                      marginLeft: "20px",
-                      fontWeight: "bold",
-                      fontSize: "20px",
-                    }}
-                  >
-                    File Name
-                  </div>
-
-                  <div
-                    style={{ flex: 0.98, fontWeight: "bold", fontSize: "20px" }}
-                  >
-                    Upload Time
-                  </div>
-
-                  <div
-                    style={{
-                      flex: 0.3,
-                      marginRight: "50px",
-                      fontWeight: "bold",
-                      fontSize: "20px",
-                    }}
-                  >
-                    Faculty Name
-                  </div>
-                </div>
-              )}
+                </div> 
             </div>
           </div>
         )}

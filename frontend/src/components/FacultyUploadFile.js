@@ -41,6 +41,7 @@ export default class FacultyUploadFile extends Component {
   };
   handleToggleStudent = () => {
     this.setState({ isUser: true });
+    
   };
   handleToggleFaculty = () => {
     this.setState({ isUser: false });
@@ -51,6 +52,7 @@ export default class FacultyUploadFile extends Component {
     data.append("userID", localStorage.getItem("id"));
     data.append("subjectID", this.state.selectedSubject);
     data.append("fileName", this.state.filename);
+    data.append("whichUser", localStorage.getItem("whichUser"));
     // console.log(data);
     fetch("http://localhost:8000/auth/uploadFile/", {
       method: "POST",

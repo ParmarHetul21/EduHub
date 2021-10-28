@@ -9,7 +9,7 @@ import {
 
 class Addusers extends Component {
 	state = {
-		whichUserToAdd:"",
+		whichUserToAdd:"student",
 	}
 
 	chooseUser = (e) => {
@@ -57,11 +57,12 @@ class Addusers extends Component {
 							<InputGroup className="mb-3 input-group-lg">
 								<DropdownButton
 									variant="outline-secondary"
-									title="User Type"
+									title={this.state.whichUserToAdd}
 									id="input-group-dropdown-2"
 									onSelect={(e) => {
 										this.chooseUser(e);
 									}}
+
 								>
 									<Dropdown.Item eventKey="faculty">
 										Faculty

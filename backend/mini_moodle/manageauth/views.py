@@ -46,12 +46,18 @@ def fetchStudents(request):
     for i in serializer.data:
         data_list.append(i)            
         student_serializer = StudentProfileSerializer(StudentProfile.objects.filter(username=i["username"]), many=True)
+        print("data of students",student_serializer.data)
         for j in student_serializer.data:
             for i in data_list:
                 print(i["username"])
                 print(j["username"])
                 if(i["username"] == j["username"]):                
-                    i["semester"] = j["semester"]    
+                    i["semester"] = j["semester"]
+                    i["enrollment"] = j["enrollment"]
+                    i["mobile"] = j["mobile"]
+                    i["batch"] = j["batch"]
+                    i["first_name"] = i["first_name"]
+                    i["last_name"] = i["last_name"]
     return Response(data_list)
 
 class SubjectAllocationList(APIView):
@@ -157,7 +163,10 @@ class UploadFileView(generics.CreateAPIView):
             )
             user = StudentProfile(
                 username=row["username"],
-                semester=row["semester"]
+                enrollment=row["enrollment"],
+                semester=row["semester"],
+                batch=row["batch"],
+                mobile=row["mobile"],
             )
             user.save()
             new_file.save()

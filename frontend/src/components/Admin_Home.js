@@ -10,6 +10,7 @@ class Admin_Home extends Component {
     isToggle: true,
     isLoggedIn: false,
     faculty: [],
+    selectedBatch:null
   };
 
   handleToggle = (e) => {
@@ -38,6 +39,10 @@ class Admin_Home extends Component {
       );
   }
 
+  setBatch = (e) => {
+    this.setState({selectedBatch: e})
+  }
+
   render() {
     return (
       <>
@@ -48,8 +53,8 @@ class Admin_Home extends Component {
             <div
               className=" d-flex justify-content-between"
               style={{
-                marginTop: "100px",
-                marginLeft: "20px",
+                marginTop: "120px",
+                marginLeft: "40px",
               }}
             >
               <ToggleButtonGroup
@@ -73,7 +78,13 @@ class Admin_Home extends Component {
                   faculty
                 </ToggleButton>
               </ToggleButtonGroup>
-              <Dropdown>
+             
+            </div>
+            
+            {this.state.isToggle ? (
+              <>
+              <div style={{flex:0, marginLeft:"80px"}}>
+        <Dropdown>
                 <Dropdown.Toggle
                   variant="success"
                   id="dropdown-basic"
@@ -82,26 +93,52 @@ class Admin_Home extends Component {
                     border: "none",
                     color: "black",
                     marginRight: "30px",
+                    float:"right"
                   }}
                 >
+                  {this.state.selectedBatch ?
+                  <span>{this.state.selectedBatch}</span>
+                   :
                   <span>Batch No.</span>
+                  }
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu style={{ marginLeft: "-30px" }}>
-                  <Dropdown.Item>2020-22</Dropdown.Item>
-                  <Dropdown.Item>2018-20</Dropdown.Item>
-                  <Dropdown.Item>2016-18</Dropdown.Item>
+                  <Dropdown.Item onClick={(e) => this.setBatch(e.target.id)} id="2020-22">2020-22</Dropdown.Item>
+                  <Dropdown.Item onClick={(e) => this.setBatch(e.target.id)} id="2018-20">2018-20</Dropdown.Item>
+                  <Dropdown.Item onClick={(e) => this.setBatch(e.target.id)} id="2016-18">2016-18</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-            </div>
-            {this.state.isToggle ? (
-              <>
-                <FilterStudBysem />
+              </div>
+                <FilterStudBysem batch={this.state.selectedBatch} />
               </>
             ) : (
-              <div style={{ height: "400px", marginTop: "165px" }}>
+              <>
+              <div style={{ height: "400px", marginTop: "100px" }}>
+                
                 {/* Faculty */}
                 <div className="card-deck">
+                  <div className="container">
+                    <div className="grid" id="grid">
+                            
+                        {this.state.faculty.map( f => (
+                            <div className="card" style={{ height: "100px" }} key={f.id}>
+                              <Link
+                                to={`/assignSubject/${f.first_name + " " + f.last_name + ":" + f.id}`} 
+                                style={{textDecoration:"none",color:"black"}}
+                              >
+                                <div className="card-body" style={{padding:"10px"}}>
+                                <h4 className="card-title" >{f.first_name}&nbsp;{f.last_name}</h4>
+                                </div>
+                                </Link>
+                            </div>
+                        ))}
+                    </div>
+                    <br></br>
+                  </div>
+                </div>
+                
+                {/* <div>
                   <div className="container">
                     <div className="row">
                       {this.state.faculty.map((d) => (
@@ -112,7 +149,7 @@ class Admin_Home extends Component {
                                 style={{textDecoration:"none",color:"black"}}
                               >
                                 <div className="card-body">
-                                <h4 className="card-title" >{d.username}</h4>
+                                <h4 className="card-title" >{d.first_name}&nbsp;{d.last_name}</h4>
                             </div>
                               </Link>
                           </div>
@@ -120,8 +157,9 @@ class Admin_Home extends Component {
                       ))}
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
+              </>
             )}
           </div>
         )}

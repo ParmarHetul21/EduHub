@@ -31,6 +31,7 @@ class Login extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
+        if(json.token){
         localStorage.setItem("token", json.token);
         localStorage.setItem("id", json.user.id);
         localStorage.setItem("username", json.user.username);
@@ -50,7 +51,10 @@ class Login extends Component {
           () => {
             console.log(this.state);
           }
-        );
+        ); 
+        }else{
+          alert("wrong credentials")
+        }
       });
   };
 

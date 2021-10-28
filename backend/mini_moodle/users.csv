@@ -1,7 +1,9 @@
-username,password,firstname,lastname,email,semester
-vishwa,Abcd@1234,vishwa,sonar,demo@gmail.com,1
-bhumik,Abcd@1234,bhumik,xyz,demo@gmail.com,2
-vidhi,Abcd@1234,vidhi,parmar,demo@gmail.com,4
-hetul,Abcd@1234,hetul,parmar,demo@gmail.com,3
-dhwani,Abcd@1234,dhwani,karkar,demo@gmail.com,3
-kwinsi,Abcd@1234,kwinsi,sadhu,demo@gmail.com,4
+username,enrollment,password,firstname,lastname,email,semester,batch,mobile,
+B53vishwa,202000721010006,Abcd@1234,vishwa,sonar,vishwasonar12@gmail.com,1,2020-22,9099065684
+B54bhumik,202000721010846,Abcd@1234,bhumik,xyz,bhumikk@gmail.com,2,2020-22,9088545645
+B55vidhi,202000721010847,Abcd@1234,vidhi,parmar,vidhipr@gmail.com,4,2020-22,9099845654
+B56hetul,202000721010049,Abcd@1234,hetul,parmar,hetul80@gmail.com,3,2020-22,9904584889
+B57dhwani,202000721010044,Abcd@1234,dhwani,karkar,dhwani14@gmail.com,3,2020-22,9199545680
+B58kwinsi,202000721010102,Abcd@1234,kwinsi,sadhu,sadhukw@gmail.com,4,2020-22,8088040404
+B59nikhil,202000721010076,Abcd@1234,Nikhil,Parmar,np@gmail.com,4,2020-22,9098780801
+B60rushit,202000721010089,Abcd@1234,Rushit,Anadkat,imark@gmail.com,4,2020-22,8711590054

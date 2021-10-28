@@ -1,7 +1,7 @@
 from os import name
 from django.urls import path
 
-from .views import current_user, UserList, SubjectList, fetchFiles, UploadFileView, fetchFileByUser, UploadFileViewForFaculty, fetchFaculty,SubjectAllocationList, fetchStudents,uploadFile
+from .views import current_user, UserList, SubjectList, fetchFiles, UploadFileView, UploadFileViewForFaculty, fetchFaculty,SubjectAllocationList, fetchStudents,uploadFile
 
 urlpatterns = [
     path('current_user/', current_user, name="currentUser"),

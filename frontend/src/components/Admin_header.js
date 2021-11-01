@@ -28,11 +28,6 @@ class Admin_header extends Component {
     this.props.history.push(path);
   }
 
-  // handleLogout = (e) => {
-  // 	e.preventDefault();
-  // 	localStorage.clear();
-  // };
-
   render() {
     return (
       <div>
@@ -54,12 +49,12 @@ class Admin_header extends Component {
 
           <Nav className="mr-auto">
             <>
-              <Link
+              {/* <Link
                 className="h5 px-3 text-light  text-decoration-none py-4"
                 to="/"
               >
                 Inquiries
-              </Link>
+              </Link> */}
               <Dropdown>
                 <Dropdown.Toggle
                   variant="success"

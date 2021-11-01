@@ -5,9 +5,14 @@ import { Navbar, Nav } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 import EduHub from "../components/icons/Main_Logo.png";
 import UserIcon from "../components/icons/user_white.png";
+import Addicon from "../components/icons/1_plus.png";
 import "../App.css";
+import { withRouter } from "react-router";
 
 class Faculty_header extends Component {
+  nextPath(path) {
+    this.props.history.push(path);
+  }
   render() {
     return (
       <div>
@@ -30,11 +35,38 @@ class Faculty_header extends Component {
           <Nav className="mr-auto">
             <Link
               className="h5 text-light px-3 text-decoration-none py-4"
-              to="/"
+              to="/faculty_home"
             >
-              Faculty
+              Home
             </Link>
+            <Dropdown style={{height:"80px"}}>
+                <Dropdown.Toggle
+                  variant="success"
+                  id="dropdown-basic"
+                  style={{
+                    backgroundColor: "transparent",
+                    border: "none",
+                    marginTop: "17px",
+                    marginRight: "10px",
+                  }}
+                >
+                  <img src={Addicon} height="25px" width="25px" alt="User" />
+                </Dropdown.Toggle>
 
+                <Dropdown.Menu
+                  className="text-decoration-none"
+                  style={{
+                    marginLeft: "-100px",
+                  }}
+                >
+                  <Dropdown.Item
+                    className="text-decoration-none"
+                    onClick={() => this.nextPath("/faculty_file_upload")}
+                  >
+                    Upload Files
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             <Link
               className="px-4 h5 text-light text-decoration-none"
               to="/login"
@@ -50,4 +82,4 @@ class Faculty_header extends Component {
   }
 }
 
-export default Faculty_header;
+export default withRouter(Faculty_header);

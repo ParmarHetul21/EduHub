@@ -70,11 +70,11 @@ export default class FacultyUploadFile extends Component {
   render() {
     var data = [];
     this.state.subjects.map((s) => s.map((d) => data.push(d)));
-    var fdata = data.filter((d) => d.semester == this.state.selectedsemester);
-
+    var fdata = data.filter((d) => d.semester === this.state.selectedsemester);
+    
     return (
       <>
-        {localStorage.getItem("token") == null ? (
+        {localStorage.getItem("token") === null ? (
           <Redirect to="/login" />
         ) : (
           <div
@@ -100,7 +100,7 @@ export default class FacultyUploadFile extends Component {
                       onSelect={(e) => this.changeValue(e)}
                     >
                       {fdata.map((f) => (
-                        <Dropdown.Item eventKey={f.id}>
+                        <Dropdown.Item key={f.id} eventKey={f.id}>
                           {f.subjectname}
                         </Dropdown.Item>
                       ))}
@@ -140,7 +140,7 @@ export default class FacultyUploadFile extends Component {
             </div>
             <div id="faculty-sidebar">
               {this.state.semester.map((s) => (
-                <div className="sidebar-item">
+                <div className="sidebar-item" key={s}>
                   <h2 onClick={() => this.setSemester(s)}>Semester - {s}</h2>
                 </div>
               ))}

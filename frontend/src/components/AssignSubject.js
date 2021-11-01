@@ -4,7 +4,7 @@ import "../App.css";
 import { withRouter } from "react-router";
 import Update from "../components/icons/Update.png";
 import Delete from "../components/icons/Delete.png";
-import Modal from "react-bootstrap/Modal";
+
 
 class AssignSubject extends Component {
   state = {
@@ -59,8 +59,8 @@ class AssignSubject extends Component {
   };
 
   handleSubjectChange = (e) => {
-    let s = this.state.subjects.filter((d) => d.subjectname == e.target.value);
-    s.map((d) => {
+    let s = this.state.subjects.filter((d) => d.subjectname === e.target.value);
+    s.map((d) => (
       this.setState(
         {
           selectedsubject: d.id,
@@ -68,8 +68,8 @@ class AssignSubject extends Component {
         () => {
           console.log("selectedsubject" + this.state.selectedsubject);
         }
-      );
-    });
+      )
+    ));
   };
 
   allocateSubject = (e) => {
@@ -145,6 +145,7 @@ class AssignSubject extends Component {
       (d) => d.semester.toString() === this.state.selectedsemester.toString()
     );
 
+    
     return (
       <>
         <div className="text" style={{ height: "580px" }}>
@@ -216,10 +217,11 @@ class AssignSubject extends Component {
             <div style={{ flex: 0, marginRight: "20px" }}>Delete</div>
           </div>
           {this.state.fetchedSubjects.map((e) => (
-            <div className="faculty-subjectCard">
+            <div className="faculty-subjectCard" >
+              
               {e.map((f) => (
                 <>
-                  <div style={{ flex: 1, marginLeft: "20px" }}>
+                  <div style={{ flex: 1, marginLeft: "20px" }} key={f.id}>
                     {f.subjectname}
                   </div>
 

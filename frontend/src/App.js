@@ -15,7 +15,7 @@ import AssignSubject from "./components/AssignSubject";
 import FilterStudent from "./components/FilterStudent";
 import FacultyHome from "./components/FacultyHome";
 import FacultyUploadFile from "./components/FacultyUploadFile";
-import Faculty_header from "./components/Faculty_header";
+import FacultyHeader from "./components/FacultyHeader";
 
 class App extends Component {
   render() {
@@ -74,12 +74,12 @@ class App extends Component {
             {/* Faculty */}
 
             <Route path="/faculty_home">
-              <Faculty_header />
+              <FacultyHeader />
               <FacultyHome />
               <Footer />
             </Route>
             <Route path="/faculty_file_upload">
-              <Faculty_header />
+              <FacultyHeader />
               <FacultyUploadFile />
               <Footer />
             </Route>

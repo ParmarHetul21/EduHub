@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import semester from "../components/icons/semester.png";
-import { Dropdown } from "react-bootstrap";
+
 class FilterStudBysem extends Component {
     state = {
         semesters:[1,2,3,4],
@@ -17,11 +17,11 @@ class FilterStudBysem extends Component {
         
         {/* Student */}
 
-        <div className="card-deck" onClick="">
+        <div className="card-deck">
             <div className="container">
                 <div className="row">
                     {this.state.semesters.map(s => (
-                        <div className="col-sm">
+                        <div className="col-sm" key={s}>
                             <Link to = {`/filterStudent/${s}:${this.props.batch}`} style={{textDecoration:"none",color:"black"}}>
                         <div className="card" style={{marginLeft:"20px"}}>
                             <img

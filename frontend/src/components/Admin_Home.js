@@ -32,10 +32,15 @@ class Admin_Home extends Component {
       },
     })
       .then((res) => res.json())
-      .then((data) =>
+      .then((data) => {
+        if(data.detail){
+          alert(data.detail)
+          localStorage.clear()
+        }
         this.setState({ faculty: data }, () => {
           console.log(this.state.faculty);
         })
+      }
       );
   }
 

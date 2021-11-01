@@ -4,7 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Navbar, Nav } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 import EduHub from "../components/icons/Main_Logo.png";
-import UserIcon from "../components/icons/user_white.png";
 import Addicon from "../components/icons/1_plus.png";
 import "../App.css";
 import { withRouter } from "react-router";

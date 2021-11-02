@@ -38,9 +38,11 @@ class Addsubjects extends Component {
 
   Addsubjects = (e, data) => {
     e.preventDefault();
-    if (this.state.subjectname === "" && this.state.semester === 0) {
-      alert("fields are empty");
+    if (this.state.subjectname === "" || this.state.semester === 0) {
+      alert("SubjectName or Semester fields are empty");
+      return   
     }
+
     fetch("http://127.0.0.1:8000/auth/addsubject/", {
       method: "POST",
       headers: {

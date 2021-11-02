@@ -18,7 +18,7 @@ class FilterStudent extends Component{
     }
 
     render(){
-        let data = this.state.students.filter(s => s.semester === this.props.match.params.semester.split(":")[0] && s.batch === this.props.match.params.semester.split(":")[1])
+        let data = this.state.students.filter(s => s.semester.toString() === this.props.match.params.semester.split(":")[0] && s.batch.toString() === this.props.match.params.semester.split(":")[1])
   
         return <>   
            <div className="bg_color_admin" style={{width:"100%"}}>

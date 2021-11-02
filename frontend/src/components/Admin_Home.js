@@ -10,7 +10,7 @@ class Admin_Home extends Component {
     isToggle: true,
     isLoggedIn: false,
     faculty: [],
-    selectedBatch:null
+    selectedBatch:"2020-22"
   };
 
   handleToggle = (e) => {

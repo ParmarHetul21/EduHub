@@ -10,11 +10,11 @@ export default class FacultyHome extends Component {
     selectedsemester: 1,
     isUser: false,
     subjects: [],
-    selectedSubject: "choose subject",
+    selectedSubject: "",
     itemSubjects: [],
     checkedToggle:"",
     files:[],
-    selectedFtype: "choose file type"
+    selectedFtype: ""
   };
   componentDidMount() {
     if (localStorage.getItem("id")) {
@@ -68,13 +68,15 @@ export default class FacultyHome extends Component {
   
 
   subjectFilter = (e) => {
-    // console.log(e.toString().split(":")[1])
+    console.log(e.toString().split(":")[1])
     this.setState({selectedSubject:e})
   } 
   
 
-  setFileType = (e) => this.setState({selectedFtype: e})
-  
+  setFileType = (e) => {
+    console.log(e);
+    this.setState({selectedFtype: e})
+  }
   
 
   render() {
@@ -91,26 +93,31 @@ export default class FacultyHome extends Component {
       else if(d.checkedToggle === "student"){
         files = d.files.filter(f => f.whichUser==="student")
       }
-      else if (d.selectedSubject !== null){
-        files = d.files.filter(f => f.subjectID.toString() === d.selectedSubject.toString().split(":")[1])
+      else if(d.selectedSubject!=="" && d.selectedFtype == ""){
+        files = d.files.filter(f => f.subjectID == d.selectedSubject.toString().split(":")[1])
       }
-      else if(d.selectedFtype !== null){
-         if(d.selectedFtype === "pdf"){
-          files = d.files.filter(f => (
-            f.fileName.toString().split(".")[1] === "pdf"
-          ))
-        }
-        else if(d.selectedFtype === "ppt"){
-          files = d.files.filter(f => (
-            f.fileName.toString().split(".")[1] === "pptx" || f.fileName.toString().split(".")[1] === "ppt"
-          ))
-        }
-        else if(d.selectedFtype === "txt"){
-          files = d.files.filter(f => (
-            f.fileName.toString().split(".")[1] === "txt"
-          ))
-        }
+      //for file type and subject both together selected
+      else if(d.selectedFtype == "ppt" && d.selectedSubject==""){
+        files = d.files.filter(f => f.fileName.toString().split(".")[1] == "pptx")
       }
+      else if(d.selectedFtype == "txt" && d.selectedSubject==""){
+        files = d.files.filter(f => f.fileName.toString().split(".")[1] == "txt" )
+      }
+      else if(d.selectedFtype == "pdf" && d.selectedSubject==""){
+        files = d.files.filter(f => f.fileName.toString().split(".")[1] == "pdf")
+      }
+      //for only file type selection
+      else if(d.selectedFtype == "ppt" && d.selectedSubject !== ""){
+        files = d.files.filter(f => f.fileName.toString().split(".")[1] == "pptx" && f.subjectID == d.selectedSubject.toString().split(":")[1])
+      }
+      else if(d.selectedFtype == "txt" && d.selectedSubject !== ""){
+        files = d.files.filter(f => f.fileName.toString().split(".")[1] == "txt" && f.subjectID == d.selectedSubject.toString().split(":")[1])
+      }
+      else if(d.selectedFtype == "pdf" && d.selectedSubject !== ""){
+        files = d.files.filter(f => f.fileName.toString().split(".")[1] == "pdf" && f.subjectID == d.selectedSubject.toString().split(":")[1])
+      }
+
+      //else
       else{
         files = d.files
       }
@@ -219,7 +226,7 @@ export default class FacultyHome extends Component {
              
                     <DropdownButton
                       variant="outline-secondary"
-                      title={this.state.selectedSubject.toString().split(":")[0]}
+                      title="select subject"
                       id="input-group-dropdown-2"
                       style={{marginLeft:"8px"}}
                       onSelect={(e)=>this.subjectFilter(e)}
@@ -233,7 +240,7 @@ export default class FacultyHome extends Component {
 
                     <DropdownButton
                       variant="outline-secondary"
-                      title={this.state.selectedFtype}
+                      title="select file"
                       id="input-group-dropdown-2"
                       style={{marginLeft:"8px"}}
                       onSelect={(e) => this.setFileType(e)}

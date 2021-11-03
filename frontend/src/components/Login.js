@@ -31,29 +31,23 @@ class Login extends Component {
     })
       .then((res) => res.json())
       .then((json) => {
-        if(json.token){
-        localStorage.setItem("token", json.token);
-        localStorage.setItem("id", json.user.id);
-        localStorage.setItem("username", json.user.username);
-        if(json.user.is_staff===true){
-          localStorage.setItem("whichUser","faculty")
-        }
-        else{
-          localStorage.setItem("whichUser","student")
-        }
-        this.setState(
-          {
+        if (json.token) {
+          localStorage.setItem("token", json.token);
+          localStorage.setItem("id", json.user.id);
+          localStorage.setItem("username", json.user.username);
+          if (json.user.is_staff === true) {
+            localStorage.setItem("whichUser", "faculty");
+          } else {
+            localStorage.setItem("whichUser", "student");
+          }
+          this.setState({
             logged_in: true,
             username: json.user.username,
             is_superuser: json.user.is_superuser,
             is_staff: json.user.is_staff,
-          },
-          () => {
-            console.log(this.state);
-          }
-        ); 
-        }else{
-          alert("wrong credentials")
+          });
+        } else {
+          alert("wrong credentials");
         }
       });
   };
@@ -80,7 +74,7 @@ class Login extends Component {
       } else if (this.state.is_staff && !this.state.is_superuser) {
         return <Redirect to="/faculty_home" />;
       } else {
-        return <Redirect to="/" />;
+        return <Redirect to="/setPassword" />;
       }
     }
     return (

@@ -16,6 +16,7 @@ import FilterStudent from "./components/FilterStudent";
 import FacultyHome from "./components/FacultyHome";
 import FacultyUploadFile from "./components/FacultyUploadFile";
 import FacultyHeader from "./components/FacultyHeader";
+import StudentPanel from "./components/StudentPanel";
 
 class App extends Component {
   render() {
@@ -29,17 +30,24 @@ class App extends Component {
               <Footer />
             </Route>
 
+            <Route exact path="/studentPanel/:sem">
+              <Header />
+              <StudentPanel />
+              <Footer />
+            </Route>
+
             <Route path="/login">
               <Header />
               <Login />
               <Footer />
             </Route>
 
-            <Route path="/password">
+            <Route path="/setPassword">
               <Header />
               <Password />
               <Footer />
             </Route>
+
             {/* Admin  */}
             <Route path="/admin_home">
               <AdminHeader />

@@ -30,6 +30,23 @@ def current_user(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
+def currentStudent(request,id):
+    data_list = []
+    data = User.objects.filter(username = id)
+    serializer = UserSerializer(data,many=True)
+    # print(serializer.data)
+    for i in serializer.data:
+        data_list.append(i)
+        student_serializer = StudentProfileSerializer(StudentProfile.objects.filter(username=i["username"]), many=True)
+        for j in student_serializer.data:
+            for k in data_list:
+                print(k["username"])
+                print(j["username"])
+                if(k["username"] == j["username"]):
+                    k["passwordStatus"] = j["passwordStatus"]
+    return Response(data_list)
+
+@api_view(['GET'])
 def fetchFaculty(request):
     faculty = User.objects.filter(is_staff=True,is_superuser=False)
     serializer = UserSerializer(faculty, many=True)
@@ -40,13 +57,12 @@ def fetchFaculty(request):
 @api_view(['GET'])
 def fetchStudents(request):
     data_list = []
-    semester_list = []
     student = User.objects.filter(is_staff=False,is_superuser=False)
     serializer = UserSerializer(student, many=True)    
     for i in serializer.data:
         data_list.append(i)            
         student_serializer = StudentProfileSerializer(StudentProfile.objects.filter(username=i["username"]), many=True)
-        print("data of students",student_serializer.data)
+        # print("data of students",student_serializer.data)
         for j in student_serializer.data:
             for i in data_list:
                 print(i["username"])
@@ -58,6 +74,7 @@ def fetchStudents(request):
                     i["batch"] = j["batch"]
                     i["first_name"] = i["first_name"]
                     i["last_name"] = i["last_name"]
+                    i["passwordStatus"] = j["passwordStatus"]
     return Response(data_list)
 
 class SubjectAllocationList(APIView):

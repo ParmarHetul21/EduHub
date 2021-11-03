@@ -5,6 +5,7 @@ import "../App.css";
 import female from "../components/icons/female.png";
 import male from "../components/icons/male.png";
 import search from "../components/icons/483356.png";
+import { Link } from "react-router-dom";
 const breakPoints = [
   { width: 1, itemsToShow: 1 },
   { width: 550, itemsToShow: 2 },
@@ -13,6 +14,9 @@ const breakPoints = [
 ];
 
 class Body extends Component {
+  state = {
+    semester: [1, 2, 3, 4],
+  };
   onSearch() {
     console.log("Clicked");
   }
@@ -62,15 +66,39 @@ class Body extends Component {
         <div className="card-deck">
           <div className="container">
             <div className="row">
-              <div className="col-sm">
-                <div className="card">
-                  <img className="card-img-top" src={semester} alt="Card cap" />
-                  <div className="card-body">
-                    <h5 className="card-title">Semester - 1</h5>
-                  </div>
+              {this.state.semester.map((e) => (
+                <div className="col-sm">
+                  {localStorage.getItem("token") ? (
+                    <Link
+                      to={`/studentPanel/${e}`}
+                      style={{ textDecoration: "none", color: "black" }}
+                    >
+                      <div className="card">
+                        <img
+                          className="card-img-top"
+                          src={semester}
+                          alt="Card cap"
+                        />
+                        <div className="card-body">
+                          <h5 className="card-title">Semester - {e}</h5>
+                        </div>
+                      </div>
+                    </Link>
+                  ) : (
+                    <div className="card">
+                      <img
+                        className="card-img-top"
+                        src={semester}
+                        alt="Card cap"
+                      />
+                      <div className="card-body">
+                        <h5 className="card-title">Semester - {e}</h5>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              </div>
-              <div className="col-sm">
+              ))}
+              {/* <div className="col-sm">
                 <div className="card">
                   <img className="card-img-top" src={semester} alt="Card cap" />
                   <div className="card-body">
@@ -93,7 +121,7 @@ class Body extends Component {
                     <h5 className="card-title">Semester - 4</h5>
                   </div>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

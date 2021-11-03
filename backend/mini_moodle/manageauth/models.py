@@ -23,6 +23,7 @@ class StudentProfile(models.Model):
     semester = models.IntegerField()
     batch = models.CharField(max_length = 20, default=True)
     mobile = models.IntegerField(default=True)
+    passwordStatus = models.BooleanField(default=False,null=True)
 
     def __str__(self):
         return self.username

@@ -1,10 +1,11 @@
 from os import name
 from django.urls import path
 
-from .views import current_user, UserList, SubjectList, fetchFiles, UploadFileView, UploadFileViewForFaculty, fetchFaculty,SubjectAllocationList, fetchStudents,uploadFile
+from .views import current_user, UserList, SubjectList, currentStudent, fetchFiles, UploadFileView, UploadFileViewForFaculty, fetchFaculty,SubjectAllocationList, fetchStudents,uploadFile
 
 urlpatterns = [
     path('current_user/', current_user, name="currentUser"),
+    path('currentStudent/<str:id>/', currentStudent, name="currentStudent"),
     path('users/', UserList.as_view()),
     path("addsubject/", SubjectList.Addsubjects, name="addSubject"),
     path("showsubject/", SubjectList.showSubjects, name="showSubject"),

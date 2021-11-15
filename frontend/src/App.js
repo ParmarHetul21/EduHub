@@ -17,6 +17,8 @@ import FacultyHome from "./components/FacultyHome";
 import FacultyUploadFile from "./components/FacultyUploadFile";
 import FacultyHeader from "./components/FacultyHeader";
 import StudentPanel from "./components/StudentPanel";
+import StudentFileUpload from "./components/StudentFileUpload";
+import FileApproval from "./components/FileApproval";
 
 class App extends Component {
   render() {
@@ -86,12 +88,26 @@ class App extends Component {
               <FacultyHome />
               <Footer />
             </Route>
+
+            <Route path="/fileApproval">
+              <FacultyHeader />
+              <FileApproval />
+              <Footer />
+            </Route>
+
             <Route path="/faculty_file_upload">
               <FacultyHeader />
               <FacultyUploadFile />
               <Footer />
             </Route>
           </Switch>
+
+          {/* student */}
+          <Route path="/studentFileUpload">
+              <FacultyHeader />
+              <StudentFileUpload />
+              <Footer />
+            </Route>
         </Router>
       </div>
     );

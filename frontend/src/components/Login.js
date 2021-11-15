@@ -10,6 +10,7 @@ class Login extends Component {
     logged_in: false,
     is_superuser: false,
     is_staff: false,
+    passwordStatus: null
   };
   handle_change = (e) => {
     const name = e.target.name;
@@ -49,7 +50,25 @@ class Login extends Component {
         } else {
           alert("wrong credentials");
         }
-      });
+      })
+      setTimeout(() => {
+        fetch(
+          `http://localhost:8000/auth/currentStudent/${localStorage.getItem(
+            "username"
+          )}/`,
+          {
+            method: "GET",
+            headers: { Authorization: `JWT ${localStorage.getItem("token")}` },
+          }
+        )
+          .then((res) => res.json())
+          .then((data) =>
+            this.setState({ passwordStatus: data[0].passwordStatus },()=>{
+              console.log("this is status of password", this.state.passwordStatus)
+            })
+          );  
+      }, 700);
+      
   };
 
   async componentDidMount() {
@@ -73,12 +92,17 @@ class Login extends Component {
         return <Redirect to="/admin_home" />;
       } else if (this.state.is_staff && !this.state.is_superuser) {
         return <Redirect to="/faculty_home" />;
-      } else {
-        return <Redirect to="/setPassword" />;
+      } 
+      else if(this.state.passwordStatus == true) {
+        return <Redirect to="/" />;
       }
+      else if(this.state.passwordStatus == false){
+        return <Redirect to="/setPassword" />;
+      }      
     }
     return (
       <>
+        
         <div className="container-login">
           <div className="image">
             <img

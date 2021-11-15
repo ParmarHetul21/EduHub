@@ -9,6 +9,9 @@ class StudentPanel extends Component {
     subjects: [],
     checkedToggle: "",
     isUser: false,
+    files:[],
+    selectedSubject : null,
+    selectedFtype: null,
   };
   componentDidMount() {
     fetch("http://localhost:8000/auth/showsubject/", {
@@ -19,7 +22,32 @@ class StudentPanel extends Component {
     })
       .then((res) => res.json())
       .then((data) => this.setState({ subjects: data }));
+
+      //start fetching files
+      fetch("http://localhost:8000/auth/fetchFiles/",{
+      method:"GET",
+      headers:{
+        Authorization: `JWT ${localStorage.getItem("token")}`
+      }
+        }).then(res => res.json())
+        .then(data => this.setState({files:data},()=>{
+          console.log(this.state.files)
+        }))
+      //end fetching files
   }
+
+  //set subjetct function
+  setSubject = (e,s) => {
+    console.log(s)
+    this.setState({selectedSubject: s})
+  }
+
+  //set file type function
+  setFileType = (e) => {
+    console.log(e);
+    this.setState({selectedFtype: e})
+  }
+
   handleToggleStudent = (e) => {
     this.setState({ isUser: true, checkedToggle: "student" }, () => {
       console.log(this.state.checkedToggle);
@@ -33,6 +61,34 @@ class StudentPanel extends Component {
     var data = this.state.subjects.filter(
       (s) => s.semester == this.props.match.params.sem
     );
+    var fdata = this.state.files
+    if(this.state.checkedToggle === "faculty" && this.state.selectedSubject==null){
+      fdata = this.state.files.filter(f => f.whichUser==="faculty")
+    }
+    else if(this.state.checkedToggle === "faculty" && this.state.selectedSubject){
+      fdata = this.state.files.filter(f => f.whichUser === "faculty" && f.subjectID == this.state.selectedSubject)
+    }
+    else if(this.state.checkedToggle === "student"){
+      fdata = this.state.files.filter(f => f.whichUser==="student")
+    }
+    else if(this.state.checkedToggle === "student" && this.state.selectedSubject==null){
+      fdata = this.state.files.filter(f => f.whichUser === "student" && f.subjectID == this.state.selectedSubject)
+    }
+    else if(this.state.selectedSubject){
+      fdata = fdata.filter(f=>(
+        f.subjectID == this.state.selectedSubject 
+      ))
+    }
+    else if(this.state.selectedFtype == "ppt"){
+      fdata = this.state.files.filter(f => f.fileName.toString().split(".")[1] == "pptx")
+    }
+    else if(this.state.selectedFtype == "pdf"){
+      fdata = this.state.files.filter(f => f.fileName.toString().split(".")[1] == "pdf")
+    }
+    else if(this.state.selectedFtype == "txt"){
+      fdata = this.state.files.filter(f => f.fileName.toString().split(".")[1] == "txt")
+    }
+
     return (
       <>
         {!localStorage.getItem("token") ? (
@@ -48,7 +104,7 @@ class StudentPanel extends Component {
           >
             <div id="student-sidebar">
               {data.map((s) => (
-                <div className="ssidebar-item" key={s.id}>
+                <div className="ssidebar-item" key={s.id} style={{cursor:'default'}} onClick={(e)=>this.setSubject(e,s.id)}>
                   <h4 style={{ paddingLeft: "15px" }}> {s.subjectname}</h4>
                 </div>
               ))}
@@ -156,7 +212,7 @@ class StudentPanel extends Component {
               <div className="card-deck">
                 <div className="container">
                   <div className="grid" id="grid">
-                    {/* {files.map((f) => (
+                    {fdata.map((f) => (
                       <div
                         className="card"
                         style={{ height: "100px" }}
@@ -168,7 +224,7 @@ class StudentPanel extends Component {
                           </h4>
                         </div>
                       </div>
-                    ))} */}
+                    ))}
                   </div>
                   <br></br>
                 </div>

@@ -9,7 +9,7 @@ import {
   Dropdown,
 } from "react-bootstrap";
 
-export default class FacultyUploadFile extends Component {
+export default class StudentFileUpload extends Component {
   state = {
     semester: [1, 2, 3, 4],
     subjects: [],
@@ -23,7 +23,7 @@ export default class FacultyUploadFile extends Component {
     if (localStorage.getItem("id")) {
       var uid = localStorage.getItem("id");
     }
-    fetch(`http://localhost:8000/auth/fetchSubject/${uid}`, {
+    fetch(`http://localhost:8000/auth/showsubject/`, {
       method: "GET",
       headers: {
         Authorization: `JWT ${localStorage.getItem("token")}`,
@@ -53,13 +53,6 @@ export default class FacultyUploadFile extends Component {
     data.append("subjectID", this.state.selectedSubject);
     data.append("fileName", this.state.filename);
     data.append("whichUser", localStorage.getItem("whichUser"));
-    
-    if(localStorage.getItem("whichUser") == 'faculty'){
-      data.append("isApproved", true)
-    }
-    else{
-      data.append("isApproved", false)
-    }
     // console.log(data);
     fetch("http://localhost:8000/auth/uploadFile/", {
       method: "POST",
@@ -75,9 +68,11 @@ export default class FacultyUploadFile extends Component {
     this.setState({ selectedSubject: e });
   };
   render() {
-    var data = [];
-    this.state.subjects.map((s) => s.map((d) => data.push(d)));
-    var fdata = data.filter((d) => d.semester === this.state.selectedsemester);
+
+    var subjects = this.state.subjects
+    subjects = subjects.filter(s => (
+        s.semester == this.state.selectedsemester
+    ))
     
     return (
       <>
@@ -91,7 +86,7 @@ export default class FacultyUploadFile extends Component {
               display: "flex",
               flexDirection: "column",
             }}
-          >
+               >
             <div
               className="Login"
               style={{ marginTop: "100px", marginLeft: "250px" }}
@@ -106,7 +101,7 @@ export default class FacultyUploadFile extends Component {
                       id="input-group-dropdown-2"
                       onSelect={(e) => this.changeValue(e)}
                     >
-                      {fdata.map((f) => (
+                      {subjects.map((f) => (
                         <Dropdown.Item key={f.id} eventKey={f.id}>
                           {f.subjectname}
                         </Dropdown.Item>

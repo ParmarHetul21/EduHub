@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from .serializers import SubjectAllocationSerializer, UserSerializer, UserSerializerWithToken, SubjectSerializer, FileUploadSerializer, StudentProfileSerializer,UserFileUploadSerializer
 from .models import Subject, SubjectAllocation, StudentProfile, FileUpload
 import os, csv, pandas as pd
+from django.core.mail import send_mail
 
 @api_view(['POST'])
 def uploadFile(request):
@@ -20,7 +21,43 @@ def uploadFile(request):
 
 @api_view(['GET'])
 def fetchFiles(request):
-    data = FileUpload.objects.all()
+    data = FileUpload.objects.filter(isApproved=True)
+    serializer = UserFileUploadSerializer(data, many=True)
+    return Response(serializer.data)
+
+#for approving files uploaded by users
+@api_view(["GET","POST"])
+def approveFiles(request,fid):
+    data = FileUpload.objects.filter(id=fid)
+    if request.method == "POST":
+        fdata = FileUpload.objects.get(id=fid)
+        fdata.isApproved = True
+        fdata.save()
+        return Response("File has been approved")
+    # print("thisisndflis",data[0].id)
+    
+    serializer = UserFileUploadSerializer(data, many=True)
+    return Response(serializer.data)
+
+
+#for rejecting files uploaded by users
+@api_view(["GET","POST"])
+def rejectFiles(request,fid):
+    data = FileUpload.objects.filter(id=fid)
+    if request.method == "POST":
+        fdata = FileUpload.objects.get(id=fid)
+        fdata.isApproved = False
+        fdata.save()
+        return Response("File has been Rejected")
+    # print("thisisndflis",data[0].id)
+    
+    serializer = UserFileUploadSerializer(data, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def fetchFileRequests(request):
+    data = FileUpload.objects.filter(isApproved=False)
     serializer = UserFileUploadSerializer(data, many=True)
     return Response(serializer.data)
 
@@ -52,7 +89,19 @@ def fetchFaculty(request):
     serializer = UserSerializer(faculty, many=True)
     return Response(serializer.data)
 
+@api_view(['POST'])
+def sendMail(request):
+    students = User.objects.filter(is_staff=False).values_list('email',flat=True)
+    # print(students)
+    # print("this is the list",list(students))
+    send_mail('EduHubLogin',
+    'Abcd@1234 is the password for your login purpose',
+	'nikhil.parmar.alive@gmail.com',
+	list(students),
+	fail_silently=False,)
+    return Response("success")
     
+
 #for fetching student from User table
 @api_view(['GET'])
 def fetchStudents(request):

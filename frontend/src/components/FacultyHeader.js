@@ -64,6 +64,13 @@ class Faculty_header extends Component {
                   >
                     Upload Files
                   </Dropdown.Item>
+
+                  <Dropdown.Item
+                    className="text-decoration-none"
+                    onClick={() => this.nextPath("/fileApproval")}
+                  >
+                    File Requests
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             <Link

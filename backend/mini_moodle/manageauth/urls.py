@@ -1,7 +1,7 @@
 from os import name
 from django.urls import path
 
-from .views import current_user, UserList, SubjectList, currentStudent, fetchFiles, UploadFileView, UploadFileViewForFaculty, fetchFaculty,SubjectAllocationList, fetchStudents,uploadFile
+from .views import current_user, UserList, SubjectList, approveFiles, currentStudent, fetchFiles, fetchFileRequests, UploadFileView, UploadFileViewForFaculty, fetchFaculty,SubjectAllocationList, fetchStudents,uploadFile, sendMail
 
 urlpatterns = [
     path('current_user/', current_user, name="currentUser"),
@@ -20,4 +20,7 @@ urlpatterns = [
     path("deleteSubject/<int:id>", SubjectList.deleteSubjects, name="deleteSubject"),
     path("uploadFile/",uploadFile,name="uploadFile"),
     path("fetchFiles/", fetchFiles, name="fetchFiles"),
+    path("fetchFileRequests/", fetchFileRequests, name="fetchFilerequests"),
+    path("sendMail/",sendMail, name="send mail"),
+    path("approveFile/<int:fid>/",approveFiles,name="approveFile")
 ]

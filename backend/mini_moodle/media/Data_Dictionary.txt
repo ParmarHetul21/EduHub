@@ -1,0 +1,45 @@
+Data Dictionary
+
+Student
+	studentID
+	FirstName	
+	FaherName
+    	Password
+	Batch (B-2018-20)
+	Email
+	PhoneNo
+	AltPhoneNo
+	EnrolmentNo
+	RollNo	
+	Address
+	status(Online or offline or Block visibility)
+	City
+   	State
+	cCuntry
+	Pincode
+	SemesterID
+
+Faculty
+	FacultyID
+	FirstName
+	InitalName
+    	Email
+	Password
+	PhoneNo
+	Education(UG,PG,PHD)
+	City
+	Pincode
+	Address
+   	SemesterID
+
+Semester
+	SemesterID 
+	Status
+	Course
+	SemsterNo
+	SubjectCode
+	SubjectName 
+	uploaded_material  
+	uploaded_material_time
+	FacultyID
+	studentID

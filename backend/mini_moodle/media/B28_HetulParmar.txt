@@ -1,0 +1,201 @@
+------------------------------------------
+    Hetul .D. Parmar
+    B-28
+    Pyspark Assigment - (Indian Food)
+------------------------------------------
+
+Q1. Write a mapreduce job using Pyspark library to calculate the total number vegetarian dishes
+wich are spicy too.
+
+import csv
+from pyspark import SparkContext
+
+cols = "name,ingredients,diet,prep_time,cook_time,flavor_profile,course,state,region".split(",")
+
+def main():
+    sc = SparkContext(appName="foodAnalysis")
+    inputfile = sc.textFile('/Users/hetulparmar/Data/assignment/indian_food.csv')
+    records = inputfile.map(parseRecord)
+    final_record = records.map(lambda x: x)
+    vegrecords = records.filter(lambda x:x[1]=="vegetarian")
+    spicyrecords = vegrecords.filter(lambda x:x[2]=="spicy")
+    data = spicyrecords.count()
+    print(f"total count is {data}")
+    sc.stop()
+
+def parseRecord(line):
+    row = dict(zip(cols, [a.strip() for a in next(csv.reader([line]))]))
+    name = row['name']
+    diet = row['diet']
+    flavour = row['flavor_profile']
+    return (name,diet,flavour)
+
+if __name__ == '__main__':
+    main()
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+Q2. Write a mapreduce job using Pyspark library to search the details of specific dish provided by
+user from the command line argument.
+
+import csv
+import sys
+from pyspark import SparkContext
+
+cols = "name,ingredients,diet,prep_time,cook_time,flavor_profile,course,state,region".split(",")
+
+def main():
+    sc = SparkContext(appName="foodAnalysis")
+    requested_value = sc.broadcast(sys.argv[1])
+    inputfile = sc.textFile('/Users/hetulparmar/Data/assignment/indian_food.csv')
+    records = inputfile.map(parseRecord)
+    final_record = records.map(lambda x: x)
+    records = records.filter(lambda x:x[0]==requested_value.value)
+    records.saveAsTextFile('/Users/hetulparmar/Data/assignment/output')
+    sc.stop()
+
+def parseRecord(line):
+    row = dict(zip(cols, [a.strip() for a in next(csv.reader([line]))]))
+    name = row['name']
+    state = row["state"]
+    return (name,state)
+
+
+if __name__ == '__main__':
+    main()
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+Q3.Write a mapreduce job using Pyspark library to display the top 5 dishes prepared with milk and having least prepration time.
+
+import csv
+from pyspark import SparkContext
+
+cols = "name,ingredients,diet,prep_time,cook_time,flavor_profile,course,state,region".split(",")
+
+def main():
+    sc = SparkContext(appName="foodAnalysis")
+    inputfile = sc.textFile('/Users/hetulparmar/Data/assignment/indian_food.csv')
+    records = inputfile.map(parseRecord)
+    final_records = records.filter(lambda x: "Milk" in x[0])\
+                            .takeOrdered(5, key=(lambda x:x[1]))
+    sc.parallelize(final_records).saveAsTextFile('/Users/hetulparmar/Data/assignment/output')
+    sc.stop()
+
+def parseRecord(line):
+    row = dict(zip(cols, [a.strip() for a in next(csv.reader([line]))]))
+    name = row["name"]
+    ingridents = row['ingredients']
+    prep_time = row["prep_time"]
+    return (ingridents, prep_time, name)
+
+if __name__ == '__main__':
+    main()
+
+-------------------------------------------------------------------------------------------------------------------------------------
+Q.4 Write a mapreduce job using Pyspark library to display details of dishes that are prepared in karnataka and having cooking time less than 60 mins.
+
+import csv
+from pyspark import SparkContext
+
+cols = "name,ingredients,diet,prep_time,cook_time,flavor_profile,course,state,region".split(",")
+
+def main():
+    sc = SparkContext(appName="foodAnalysis")
+    inputfile = sc.textFile('/Users/hetulparmar/Data/assignment/indian_food.csv')
+    records = inputfile.map(parseRecord)
+    karnataka_state_cooking_60 = records.filter(lambda x : x[1] == "Karnataka" and int(x[2]) < 60)
+    karnataka_state_cooking_60.saveAsTextFile('/Users/hetulparmar/Data/assignment/output4')
+    sc.stop()
+
+def parseRecord(line):
+    row = dict(zip(cols, [a.strip() for a in next(csv.reader([line]))]))
+    name = row["name"]
+    state = row['state']
+    cook_time = row["cook_time"]
+    return (name, state, cook_time)
+
+if __name__ == '__main__':
+    main()
+
+----------------------------------------------------------------------------------------------------------------------------------------
+
+Q.5 Write a mapreduce job using Pyspark library to display any five details of dishes that are prepared in south and are served in main course.
+
+import csv
+from pyspark import SparkContext
+
+cols = "name,ingredients,diet,prep_time,cook_time,flavor_profile,course,state,region".split(",")
+
+def main():
+    sc = SparkContext(appName="foodAnalysis")
+    inputfile = sc.textFile('/Users/hetulparmar/Data/assignment/indian_food.csv')
+    records = inputfile.map(parseRecord)
+    prepared_south_main_course = records.filter(lambda x : str(x[0]) == "South" and x[1] == "main course")
+    prepared_south_main_course.saveAsTextFile('/Users/hetulparmar/Data/assignment/output5')
+    sc.stop()
+
+def parseRecord(line):
+    row = dict(zip(cols, [a.strip() for a in next(csv.reader([line]))]))
+    region = row['region']
+    course = row["course"]
+    return (region, course)
+
+if __name__ == '__main__':
+    main()
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+Q6. Write a mapreduce job using Pyspark library to display details of dishes that takes maximum time to prepare.
+
+import csv
+from pyspark import SparkContext
+
+cols = "name,ingredients,diet,prep_time,cook_time,flavor_profile,course,state,region".split(",")
+
+def main():
+    try:
+        sc = SparkContext(appName="foodAnalysis")
+        inputfile = sc.textFile('/Users/hetulparmar/Data/assignment/indian_food.csv')
+        records = inputfile.map(parseRecord)
+        cook_time = records.map(lambda y : y['cook_time'])
+        cook_time_prepare = cook_time.map(lambda y : y)
+        max_cook_time_prepare = cook_time_prepare.max()
+        filter_cook_time_prepare = records.filter(lambda x: x['cook_time'] == max_cook_time_prepare)
+        filter_cook_time_prepare.saveAsTextFile('/Users/hetulparmar/Data/assignment/output6')
+        sc.stop()
+    except Exception as ex:
+        print(ex)
+
+def parseRecord(line):
+    row = dict(zip(cols, [a.strip() for a in next(csv.reader([line]))]))
+    return row
+
+if __name__ == '__main__':
+    main()
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q7. Write a mapreduce job using Pyspark library to display details of dishes that takes more than average time to prepare.
+
+import csv
+from pyspark import SparkContext
+
+cols = "name,ingredients,diet,prep_time,cook_time,flavor_profile,course,state,region".split(",")
+
+def main():
+    sc = SparkContext(appName="foodAnalysis")
+    inputfile = sc.textFile('/Users/hetulparmar/Data/assignment/indian_food.csv')
+    records = inputfile.map(parseRecord)
+    prep_time = records.map(lambda x : int(x["prep_time"]))
+    average_time = prep_time.mean()
+    maximum_time_prepare = records.filter(lambda x : int(x["prep_time"]) < average_time)
+    maximum_time_prepare.saveAsTextFile('/Users/hetulparmar/Data/assignment/output7')
+    sc.stop()
+
+def parseRecord(line):
+    row = dict(zip(cols, [a.strip() for a in next(csv.reader([line]))]))
+    return row
+
+if __name__ == '__main__':
+    main()

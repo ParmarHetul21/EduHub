@@ -17,6 +17,7 @@ class Body extends Component {
   state = {
     semester: [1, 2, 3, 4],
   };
+  
   onSearch() {
     console.log("Clicked");
   }

@@ -4,13 +4,19 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Navbar, Nav } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 import EduHub from "../components/icons/Main_Logo.png";
-import UserIcon from "../components/icons/user_white.png";
+import Addicon from "../components/icons/1_plus.png";
+import { withRouter } from "react-router";
 import "../App.css";
 
 class Header extends Component {
 	state = {
-		isLoggedIn: false,
+		isLoggedIn: false
 	};
+
+	// for redirecting to the upload files and review file
+	nextPath(path) {
+		this.props.history.push(path);
+	}
 
 	render() {
 		return (
@@ -38,68 +44,85 @@ class Header extends Component {
 						>
 							Home
 						</Link>
+
 						{this.state.isLoggedIn ? (
 							<>
 								<Link
-									className="h5 px-3 text-light  text-decoration-none py-4"
+									className="h5 px-3 text-lightT  text-decoration-none py-4"
 									to="/"
 								>
 									Inquiries
 								</Link>
-								<Dropdown>
-									<Dropdown.Toggle
-										variant="success"
-										id="dropdown-basic"
-										style={{
-											backgroundColor: "transparent",
-											border: "none",
-											marginTop: "17px",
-											marginRight: "10px",
-										}}
-									>
-										<img
-											src={UserIcon}
-											height="30px"
-											width="30px"
-											alt="User"
-										/>
-									</Dropdown.Toggle>
-
-									<Dropdown.Menu
-										style={{ marginLeft: "-100px" }}
-									>
-										<Dropdown.Item href="#/action-1">
-											Action
-										</Dropdown.Item>
-										<Dropdown.Item href="#/action-2">
-											Another action
-										</Dropdown.Item>
-										<Dropdown.Item href="#/action-3">
-											Something else
-										</Dropdown.Item>
-									</Dropdown.Menu>
-								</Dropdown>
 							</>
 						) : (
 							<>
-							{localStorage.getItem("token")?
-							<Link
-							className="px-4 h5 text-light text-decoration-none"
-							to="/login"
-							onClick={()=>localStorage.clear()}
-							style={{ marginTop: "23px" }}
-						>
-							Logout
-						</Link>:
-							<Link
-								className="px-4 h5 text-light text-decoration-none"
-								to="/login"
-								style={{ marginTop: "23px" }}
-							>
-								Login
-							</Link>
-						}
-						</>
+								{localStorage.getItem("token") ? (
+									<>
+										<Dropdown>
+											<Dropdown.Toggle
+												variant="success"
+												id="dropdown-basic"
+												style={{
+													backgroundColor:
+														"transparent",
+													border: "none",
+													marginTop: "17px",
+													marginRight: "10px"
+												}}
+											>
+												<img
+													src={Addicon}
+													height="25px"
+													wi
+													dth="25px"
+													alt="User"
+												/>
+											</Dropdown.Toggle>
+
+											<Dropdown.Menu
+												style={{ marginLeft: "-100px" }}
+											>
+												<Dropdown.Item
+													className="text-decoration-none"
+													onClick={() =>
+														this.nextPath(
+															"/studentFileUpload"
+														)
+													}
+												>
+													Upload Files
+												</Dropdown.Item>
+												<Dropdown.Item
+													className="text-decoration-none"
+													onClick={() =>
+														this.nextPath(
+															"/reviewfiles"
+														)
+													}
+												>
+													Review Files
+												</Dropdown.Item>
+											</Dropdown.Menu>
+										</Dropdown>
+										<Link
+											className="px-4 h5 text-light text-decoration-none"
+											to="/login"
+											onClick={() => localStorage.clear()}
+											style={{ marginTop: "23px" }}
+										>
+											Logout
+										</Link>
+									</>
+								) : (
+									<Link
+										className="px-4 h5 text-light text-decoration-none"
+										to="/login"
+										style={{ marginTop: "23px" }}
+									>
+										Login
+									</Link>
+								)}
+							</>
 						)}
 					</Nav>
 				</Navbar>
@@ -108,4 +131,4 @@ class Header extends Component {
 	}
 }
 
-export default Header;
+export default withRouter(Header);

@@ -1,7 +1,7 @@
 from os import name
 from django.urls import path
 
-from .views import current_user, UserList, SubjectList, approveFiles, currentStudent, fetchFiles, fetchFileRequests, UploadFileView, UploadFileViewForFaculty, fetchFaculty,SubjectAllocationList, fetchStudents,uploadFile, sendMail
+from .views import current_user, UserList, SubjectList,fetchAllFiles , rejectFiles,downloadMaterial,approveFiles,fetchNotAprrovedFiles, currentStudent, fetchFiles, fetchFileRequests, UploadFileView, UploadFileViewForFaculty, fetchFaculty,SubjectAllocationList, fetchStudents,uploadFile, sendMail
 
 urlpatterns = [
     path('current_user/', current_user, name="currentUser"),
@@ -22,5 +22,11 @@ urlpatterns = [
     path("fetchFiles/", fetchFiles, name="fetchFiles"),
     path("fetchFileRequests/", fetchFileRequests, name="fetchFilerequests"),
     path("sendMail/",sendMail, name="send mail"),
-    path("approveFile/<int:fid>/",approveFiles,name="approveFile")
+    path("approveFile/<int:fid>/",approveFiles,name="approveFile"),
+    path("rejectFile/<int:fid>/",rejectFiles,name="rejected files"),
+    #TODO: New routes added
+    path("notapprovedfiles/", fetchNotAprrovedFiles, name="notapproved"),
+    path("downloadMaterial/<int:id>/",downloadMaterial, name="Download Material"),
+    path("fetchAllFiles/<int:id>/", fetchAllFiles, name="fetchallfiles"),
 ]
+

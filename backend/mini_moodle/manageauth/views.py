@@ -1,5 +1,6 @@
 from datetime import date
-from django.http import HttpResponseRedirect, response
+from django.db.models import manager
+from django.http import HttpResponse
 from django.contrib.auth.models import User
 from rest_framework import permissions, serializers, status, generics
 from rest_framework.decorators import api_view
@@ -7,15 +8,16 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .serializers import SubjectAllocationSerializer, UserSerializer, UserSerializerWithToken, SubjectSerializer, FileUploadSerializer, StudentProfileSerializer,UserFileUploadSerializer
 from .models import Subject, SubjectAllocation, StudentProfile, FileUpload
-import os, csv, pandas as pd
+import pandas as pd
+from wsgiref.util import FileWrapper
 from django.core.mail import send_mail
+import os
 
 @api_view(['POST'])
 def uploadFile(request):
     serializer = UserFileUploadSerializer(data = request.data)
     if serializer.is_valid():
         serializer.save()
-        print(serializer)
     print(serializer.errors)
     return Response("data inserted")
 
@@ -25,7 +27,21 @@ def fetchFiles(request):
     serializer = UserFileUploadSerializer(data, many=True)
     return Response(serializer.data)
 
-#for approving files uploaded by users
+# TODO: Fetch all files
+@api_view(['GET'])
+def fetchAllFiles(request, id):
+    data = FileUpload.objects.filter(userID=id)
+    serializers = UserFileUploadSerializer(data , many=True)
+    return Response(serializers.data)
+
+# TODO: fetch the not approved files for the students
+@api_view(['GET'])
+def fetchNotAprrovedFiles(request):
+    data = FileUpload.objects.filter(isApproved=False, whichUser="student")
+    serializer = UserFileUploadSerializer(data, many=True)
+    return Response(serializer.data)
+
+#TODO: for approving files uploaded by users
 @api_view(["GET","POST"])
 def approveFiles(request,fid):
     data = FileUpload.objects.filter(id=fid)
@@ -34,8 +50,6 @@ def approveFiles(request,fid):
         fdata.isApproved = True
         fdata.save()
         return Response("File has been approved")
-    # print("thisisndflis",data[0].id)
-    
     serializer = UserFileUploadSerializer(data, many=True)
     return Response(serializer.data)
 
@@ -47,17 +61,16 @@ def rejectFiles(request,fid):
     if request.method == "POST":
         fdata = FileUpload.objects.get(id=fid)
         fdata.isApproved = False
+        fdata.isRejected = True
         fdata.save()
         return Response("File has been Rejected")
-    # print("thisisndflis",data[0].id)
-    
     serializer = UserFileUploadSerializer(data, many=True)
     return Response(serializer.data)
 
 
 @api_view(['GET'])
 def fetchFileRequests(request):
-    data = FileUpload.objects.filter(isApproved=False)
+    data = FileUpload.objects.filter(isApproved=False, isRejected=False)
     serializer = UserFileUploadSerializer(data, many=True)
     return Response(serializer.data)
 
@@ -258,3 +271,12 @@ class UploadFileViewForFaculty(generics.CreateAPIView):
             )
             new_file.save()
         return Response({"status":"success"})
+
+@api_view(['GET'])
+def downloadMaterial(request, id, format=None):
+        queryset = FileUpload.objects.get(id=id)
+        file_handle = queryset.file.path
+        document = open(file_handle, 'rb')
+        response = HttpResponse(FileWrapper(document), content_type= ['application/pdf','text/plain','application/vnd.ms-powerpoint'])
+        response['Content-Disposition'] = 'attachment; filename="%s"' % queryset.file.name
+        return response

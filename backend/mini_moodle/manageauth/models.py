@@ -35,6 +35,7 @@ class FileUpload(models.Model):
     userID = models.ForeignKey(User,on_delete=models.CASCADE,default=True)
     whichUser = models.CharField(max_length=10, default=True)
     isApproved = models.BooleanField(default=False, null=True)
+    isRejected = models.BooleanField(default=False, null=True)
     
     def __str__(self):
-        return self.fileName
+        return self.file.path

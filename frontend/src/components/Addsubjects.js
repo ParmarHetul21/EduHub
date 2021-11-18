@@ -8,15 +8,15 @@ class Addsubjects extends Component {
 		subjectname: "",
 		course: "MCA",
 		semester: 0,
-		subjects: [],
+		subjects: []
 	};
 
 	componentDidMount() {
 		fetch("http://localhost:8000/auth/showsubject/", {
 			method: "GET",
 			headers: {
-				Authorization: `JWT ${localStorage.getItem("token")}`,
-			},
+				Authorization: `JWT ${localStorage.getItem("token")}`
+			}
 		})
 			.then((res) => res.json())
 			.then((data) =>
@@ -47,9 +47,9 @@ class Addsubjects extends Component {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
-				Authorization: `JWT ${localStorage.getItem("token")}`,
+				Authorization: `JWT ${localStorage.getItem("token")}`
 			},
-			body: JSON.stringify(data),
+			body: JSON.stringify(data)
 		})
 			.then((res) => res.json())
 			.then((data) => {
@@ -64,8 +64,8 @@ class Addsubjects extends Component {
 				fetch("http://localhost:8000/auth/showsubject/", {
 					method: "GET",
 					headers: {
-						Authorization: `JWT ${localStorage.getItem("token")}`,
-					},
+						Authorization: `JWT ${localStorage.getItem("token")}`
+					}
 				})
 					.then((res) => res.json())
 					.then((data) =>
@@ -81,17 +81,17 @@ class Addsubjects extends Component {
 		fetch(`http://localhost:8000/auth/deleteSubject/${subjectid}`, {
 			method: "POST",
 			headers: {
-				Authorization: `JWT ${localStorage.getItem("token")}`,
+				Authorization: `JWT ${localStorage.getItem("token")}`
 			},
-			body: formdata,
+			body: formdata
 		})
 			.then((res) => console.log(res))
 			.then(() => {
 				fetch(`http://localhost:8000/auth/showsubject/`, {
 					method: "GET",
 					headers: {
-						Authorization: `JWT ${localStorage.getItem("token")}`,
-					},
+						Authorization: `JWT ${localStorage.getItem("token")}`
+					}
 				})
 					.then((res) => res.json())
 					.then((data) => {

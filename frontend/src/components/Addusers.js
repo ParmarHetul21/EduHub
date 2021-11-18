@@ -4,46 +4,47 @@ import {
 	Button,
 	InputGroup,
 	DropdownButton,
-	Dropdown,
+	Dropdown
 } from "react-bootstrap";
 
 class Addusers extends Component {
 	state = {
-		whichUserToAdd:"student",
-	}
+		whichUserToAdd: "student"
+	};
 
 	chooseUser = (e) => {
-		console.log(e)
-		this.setState({whichUserToAdd:e},()=>console.log("sdlkfnasl",this.state))
-	}
+		console.log(e);
+		this.setState({ whichUserToAdd: e }, () =>
+			console.log("sdlkfnasl", this.state)
+		);
+	};
 
 	handleFileChange = (e) => {
 		e.preventDefault();
-		this.setState({fileToUpload:e.target.files[0]})
-	}
+		this.setState({ fileToUpload: e.target.files[0] });
+	};
 
 	addUser = (e) => {
 		e.preventDefault();
 		let formData = new FormData();
-		formData.append("file",this.state.fileToUpload);
+		formData.append("file", this.state.fileToUpload);
 		let url = "";
-		if(this.state.whichUserToAdd==="faculty"){
+		if (this.state.whichUserToAdd === "faculty") {
 			url = "http://127.0.0.1:8000/auth/addFaculties/";
-		}
-		else{
+		} else {
 			url = "http://127.0.0.1:8000/auth/addStudents/";
 		}
-		fetch(url,
-		{
-			method: 'POST',
+		fetch(url, {
+			method: "POST",
 			headers: {
-			  Authorization: `JWT ${localStorage.getItem("token")}`,
+				Authorization: `JWT ${localStorage.getItem("token")}`
 			},
-			body: formData,	 
-		}).then(res => res.json())
-			.then(d => console.log(d))
-	}
-	
+			body: formData
+		})
+			.then((res) => res.json())
+			.then((d) => console.log(d));
+	};
+
 	render() {
 		return (
 			<div className="text" style={{ height: "580px" }}>
@@ -52,7 +53,7 @@ class Addusers extends Component {
 				</div>
 				<div className="Login">
 					<Form encType="">
-	 					<Form.Label>Select User</Form.Label>
+						<Form.Label>Select User</Form.Label>
 						<div>
 							<InputGroup className="mb-3 input-group-lg">
 								<DropdownButton
@@ -62,7 +63,6 @@ class Addusers extends Component {
 									onSelect={(e) => {
 										this.chooseUser(e);
 									}}
-
 								>
 									<Dropdown.Item eventKey="faculty">
 										Faculty
@@ -75,13 +75,22 @@ class Addusers extends Component {
 						</div>
 
 						<div>
-							<Form.Group controlId="formFile" accept=".csv" onChange={(e)=>this.handleFileChange(e)} className="mb-3">
+							<Form.Group
+								controlId="formFile"
+								accept=".csv"
+								onChange={(e) => this.handleFileChange(e)}
+								className="mb-3"
+							>
 								<Form.Label>Upload CSV file here</Form.Label>
 								<Form.Control type="file" />
 							</Form.Group>
 						</div>
 						<div className="text-center">
-							<Button size="lg" type="submit" onClick={(e)=>this.addUser(e)}>
+							<Button
+								size="lg"
+								type="submit"
+								onClick={(e) => this.addUser(e)}
+							>
 								Add
 							</Button>
 						</div>

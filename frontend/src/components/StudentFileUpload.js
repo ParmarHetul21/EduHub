@@ -67,7 +67,7 @@ export default class StudentFileUpload extends Component {
 	render() {
 		var subjects = this.state.subjects;
 		subjects = subjects.filter(
-			(s) => s.semester == this.state.selectedsemester
+			(s) => s.semester === this.state.selectedsemester
 		);
 
 		return (

@@ -104,15 +104,14 @@ def fetchFaculty(request):
 
 @api_view(['POST'])
 def sendMail(request):
-    students = User.objects.filter(is_staff=False).values_list('email',flat=True)
-    # print(students)
-    # print("this is the list",list(students))
-    send_mail('EduHubLogin',
-    'Abcd@1234 is the password for your login purpose',
-	'nikhil.parmar.alive@gmail.com',
-	list(students),
-	fail_silently=False,)
-    return Response("success")
+    if request.method == "POST":
+        students = User.objects.filter(is_staff=False).values_list('email',flat=True)
+        send_mail('EduHubLogin',
+        'Abcd@1234 is the password for your login purpose',
+        'nikhil.parmar.alive@gmail.com',
+        list(students),
+        fail_silently=False,)
+    return Response("Mail sent successfully")
     
 
 #for fetching student from User table

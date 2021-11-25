@@ -4,7 +4,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Navbar, Nav } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 import EduHub from "../components/icons/Main_Logo.png";
-import UserIcon from "../components/icons/user_white.png";
 import Addicon from "../components/icons/1_plus.png";
 import "../App.css";
 import { withRouter } from "react-router";
@@ -49,12 +48,7 @@ class Admin_header extends Component {
 
 					<Nav className="mr-auto">
 						<>
-							{/* <Link
-                className="h5 px-3 text-light  text-decoration-none py-4"
-                to="/"
-              >
-                Inquiries
-              </Link> */}
+						
 							<Dropdown>
 								<Dropdown.Toggle
 									variant="success"
@@ -96,51 +90,25 @@ class Admin_header extends Component {
 									>
 										Add Users
 									</Dropdown.Item>
-								</Dropdown.Menu>
-							</Dropdown>
-							<Dropdown>
-								<Dropdown.Toggle
-									variant="success"
-									id="dropdown-basic"
-									className="text-decoration-none"
-									style={{
-										backgroundColor: "transparent",
-										border: "none",
-										marginTop: "17px",
-										marginRight: "10px"
-									}}
-								>
-									<img
-										src={UserIcon}
-										height="25px"
-										width="25px"
-										alt="User"
-									/>
-								</Dropdown.Toggle>
-
-								<Dropdown.Menu
-									style={{ marginLeft: "-100px" }}
-									className="text-decoration-none"
-								>
-									<Dropdown.Item className="text-decoration-none">
-										{this.state.username}
-									</Dropdown.Item>
-
 									<Dropdown.Item
 										className="text-decoration-none"
-										onClick={() => {
-											localStorage.clear();
-										}}
+										onClick={() =>
+											this.nextPath("/sendMail")
+										}
 									>
-										<Link
-											to="/login"
-											className="text-decoration-none"
-										>
-											Logout
-										</Link>
+										Send Mail
 									</Dropdown.Item>
 								</Dropdown.Menu>
 							</Dropdown>
+										
+							<Link to="/login"
+								className="px-4 h5 text-light text-decoration-none"
+								style={{marginTop:"20px"}}
+								onClick={()=>localStorage.clear()}
+							>
+								Logout
+							</Link>
+								
 						</>
 					</Nav>
 				</Navbar>

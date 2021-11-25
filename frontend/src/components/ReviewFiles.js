@@ -1,12 +1,9 @@
 import { Component } from "react";
 import "../App.css";
-import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
-import ToggleButton from "react-bootstrap/ToggleButton";
 import { Redirect } from "react-router";
 import { DropdownButton, Dropdown } from "react-bootstrap";
 import Open from "../components/icons/open.png";
 import download from "../components/icons/download.png";
-import { Link } from "react-router-dom";
 
 export default class ReviewFiles extends Component {
 	state = {
@@ -142,38 +139,38 @@ export default class ReviewFiles extends Component {
 		// checking the condition for user and subjects
 
 		//for file type and subject both together selected
-		if (d.selectedFtype == "ppt" && d.selectedSubject == "") {
+		if (d.selectedFtype === "ppt" && d.selectedSubject === "") {
 			files = d.files.filter(
-				(f) => f.fileName.toString().split(".")[1] == "pptx"
+				(f) => f.fileName.toString().split(".")[1] === "pptx"
 			);
-		} else if (d.selectedFtype == "txt" && d.selectedSubject == "") {
+		} else if (d.selectedFtype === "txt" && d.selectedSubject === "") {
 			files = d.files.filter(
-				(f) => f.fileName.toString().split(".")[1] == "txt"
+				(f) => f.fileName.toString().split(".")[1] === "txt"
 			);
-		} else if (d.selectedFtype == "pdf" && d.selectedSubject == "") {
+		} else if (d.selectedFtype === "pdf" && d.selectedSubject === "") {
 			files = d.files.filter(
-				(f) => f.fileName.toString().split(".")[1] == "pdf"
+				(f) => f.fileName.toString().split(".")[1] === "pdf"
 			);
 		}
 
 		//for only file type selection
-		else if (d.selectedFtype == "ppt" && d.selectedSubject !== "") {
+		else if (d.selectedFtype === "ppt" && d.selectedSubject !== "") {
 			files = d.files.filter(
 				(f) =>
-					f.fileName.toString().split(".")[1] == "pptx" &&
-					f.subjectID == d.selectedSubject.toString().split(":")[1]
+					f.fileName.toString().split(".")[1] === "pptx" &&
+					f.subjectID === d.selectedSubject.toString().split(":")[1]
 			);
-		} else if (d.selectedFtype == "txt" && d.selectedSubject !== "") {
+		} else if (d.selectedFtype === "txt" && d.selectedSubject !== "") {
 			files = d.files.filter(
 				(f) =>
-					f.fileName.toString().split(".")[1] == "txt" &&
-					f.subjectID == d.selectedSubject.toString().split(":")[1]
+					f.fileName.toString().split(".")[1] === "txt" &&
+					f.subjectID === d.selectedSubject.toString().split(":")[1]
 			);
-		} else if (d.selectedFtype == "pdf" && d.selectedSubject !== "") {
+		} else if (d.selectedFtype === "pdf" && d.selectedSubject !== "") {
 			files = d.files.filter(
 				(f) =>
-					f.fileName.toString().split(".")[1] == "pdf" &&
-					f.subjectID == d.selectedSubject.toString().split(":")[1]
+					f.fileName.toString().split(".")[1] === "pdf" &&
+					f.subjectID === d.selectedSubject.toString().split(":")[1]
 			);
 		} else if (this.state.selectedFStatus === "pending") {
 			files = d.files.filter(
@@ -284,7 +281,7 @@ export default class ReviewFiles extends Component {
 						<div style={{ marginLeft: "90px" }}>
 							<div
 								className="faculty-subjectCard-header"
-								style={{ marginLeft: "250px" }}
+								style={{ marginLeft: "250px", marginTop:"24px" }}
 							>
 								<h5 style={{ flex: 1, marginLeft: "45px" }}>
 									FileName
@@ -330,7 +327,7 @@ export default class ReviewFiles extends Component {
 									</a>
 									<h5
 										style={{
-											flex: 1,
+											flex: 0.5,
 											marginLeft: "70px",
 											textDecoration: "none"
 										}}

@@ -92,47 +92,47 @@ export default class FacultyHome extends Component {
 				files = d.files.filter((f) => f.whichUser === "faculty");
 			} else if (d.checkedToggle === "student") {
 				files = d.files.filter((f) => f.whichUser === "student");
-			} else if (d.selectedSubject !== "" && d.selectedFtype == "") {
+			} else if (d.selectedSubject !== "" && d.selectedFtype === "") {
 				files = d.files.filter(
 					(f) =>
-						f.subjectID ==
+						f.subjectID ===
 						d.selectedSubject.toString().split(":")[1]
 				);
 			}
 			//for file type and subject both together selected
-			else if (d.selectedFtype == "ppt" && d.selectedSubject == "") {
+			else if (d.selectedFtype === "ppt" && d.selectedSubject === "") {
 				files = d.files.filter(
-					(f) => f.fileName.toString().split(".")[1] == "pptx"
+					(f) => f.fileName.toString().split(".")[1] === "pptx"
 				);
-			} else if (d.selectedFtype == "txt" && d.selectedSubject == "") {
+			} else if (d.selectedFtype === "txt" && d.selectedSubject === "") {
 				files = d.files.filter(
-					(f) => f.fileName.toString().split(".")[1] == "txt"
+					(f) => f.fileName.toString().split(".")[1] === "txt"
 				);
-			} else if (d.selectedFtype == "pdf" && d.selectedSubject == "") {
+			} else if (d.selectedFtype === "pdf" && d.selectedSubject === "") {
 				files = d.files.filter(
-					(f) => f.fileName.toString().split(".")[1] == "pdf"
+					(f) => f.fileName.toString().split(".")[1] === "pdf"
 				);
 			}
 			//for only file type selection
-			else if (d.selectedFtype == "ppt" && d.selectedSubject !== "") {
+			else if (d.selectedFtype === "ppt" && d.selectedSubject !== "") {
 				files = d.files.filter(
 					(f) =>
-						f.fileName.toString().split(".")[1] == "pptx" &&
-						f.subjectID ==
+						f.fileName.toString().split(".")[1] === "pptx" &&
+						f.subjectID ===
 							d.selectedSubject.toString().split(":")[1]
 				);
-			} else if (d.selectedFtype == "txt" && d.selectedSubject !== "") {
+			} else if (d.selectedFtype === "txt" && d.selectedSubject !== "") {
 				files = d.files.filter(
 					(f) =>
-						f.fileName.toString().split(".")[1] == "txt" &&
-						f.subjectID ==
+						f.fileName.toString().split(".")[1] === "txt" &&
+						f.subjectID ===
 							d.selectedSubject.toString().split(":")[1]
 				);
-			} else if (d.selectedFtype == "pdf" && d.selectedSubject !== "") {
+			} else if (d.selectedFtype === "pdf" && d.selectedSubject !== "") {
 				files = d.files.filter(
 					(f) =>
-						f.fileName.toString().split(".")[1] == "pdf" &&
-						f.subjectID ==
+						f.fileName.toString().split(".")[1] === "pdf" &&
+						f.subjectID ===
 							d.selectedSubject.toString().split(":")[1]
 				);
 			}

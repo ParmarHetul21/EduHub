@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Form, Row, Col } from "react-bootstrap";
 class Password extends Component {
 	state = {

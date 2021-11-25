@@ -52,7 +52,7 @@ export default class FacultyUploadFile extends Component {
 		data.append("fileName", this.state.filename);
 		data.append("whichUser", localStorage.getItem("whichUser"));
 
-		if (localStorage.getItem("whichUser") == "faculty") {
+		if (localStorage.getItem("whichUser") === "faculty") {
 			data.append("isApproved", true);
 		} else {
 			data.append("isApproved", false);

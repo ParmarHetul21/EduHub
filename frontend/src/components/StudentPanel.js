@@ -62,12 +62,12 @@ class StudentPanel extends Component {
 
 	render() {
 		var data = this.state.subjects.filter(
-			(s) => s.semester == this.props.match.params.sem
+			(s) => s.semester.toString() === this.props.match.params.sem.toString()
 		);
 		var fdata = this.state.files;
 		if (
 			this.state.checkedToggle === "faculty" &&
-			this.state.selectedSubject == null
+			this.state.selectedSubject === null
 		) {
 			fdata = this.state.files.filter((f) => f.whichUser === "faculty");
 		} else if (
@@ -77,34 +77,34 @@ class StudentPanel extends Component {
 			fdata = this.state.files.filter(
 				(f) =>
 					f.whichUser === "faculty" &&
-					f.subjectID == this.state.selectedSubject
+					f.subjectID === this.state.selectedSubject
 			);
 		} else if (this.state.checkedToggle === "student") {
 			fdata = this.state.files.filter((f) => f.whichUser === "student");
 		} else if (
 			this.state.checkedToggle === "student" &&
-			this.state.selectedSubject == null
+			this.state.selectedSubject === null
 		) {
 			fdata = this.state.files.filter(
 				(f) =>
 					f.whichUser === "student" &&
-					f.subjectID == this.state.selectedSubject
+					f.subjectID === this.state.selectedSubject
 			);
 		} else if (this.state.selectedSubject) {
 			fdata = fdata.filter(
-				(f) => f.subjectID == this.state.selectedSubject
+				(f) => f.subjectID === this.state.selectedSubject
 			);
-		} else if (this.state.selectedFtype == "ppt") {
+		} else if (this.state.selectedFtype === "ppt") {
 			fdata = this.state.files.filter(
-				(f) => f.fileName.toString().split(".")[1] == "pptx"
+				(f) => f.fileName.toString().split(".")[1] === "pptx"
 			);
-		} else if (this.state.selectedFtype == "pdf") {
+		} else if (this.state.selectedFtype === "pdf") {
 			fdata = this.state.files.filter(
-				(f) => f.fileName.toString().split(".")[1] == "pdf"
+				(f) => f.fileName.toString().split(".")[1] === "pdf"
 			);
-		} else if (this.state.selectedFtype == "txt") {
+		} else if (this.state.selectedFtype === "txt") {
 			fdata = this.state.files.filter(
-				(f) => f.fileName.toString().split(".")[1] == "txt"
+				(f) => f.fileName.toString().split(".")[1] === "txt"
 			);
 		}
 

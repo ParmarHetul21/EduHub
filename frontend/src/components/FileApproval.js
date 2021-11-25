@@ -146,6 +146,24 @@ export default class FileApproval extends Component {
 		}, 500);
 	};
 
+  downloadFile = (e, name, id) => {
+		fetch(`http://localhost:8000/auth/downloadMaterial/${id}/`, {
+			headers: {
+				Authorization: `JWT ${localStorage.getItem("token")}`
+			}
+		}).then((response) => {
+			response.blob().then((blob) => {
+				console.log(response);
+				let url = window.URL.createObjectURL(blob);
+				let a = document.createElement("a");
+				console.log(url);
+				a.href = url;
+				a.download = name;
+				a.click();
+			});
+		});
+	};
+  
 	render() {
 		if (this.state.subjects.length >= 0) {
 			var data = [];
@@ -160,52 +178,50 @@ export default class FileApproval extends Component {
 				files = d.files.filter((f) => f.whichUser === "faculty");
 			} else if (d.checkedToggle === "student") {
 				files = d.files.filter((f) => f.whichUser === "student");
-			} else if (d.selectedSubject !== "" && d.selectedFtype == "") {
+			} else if (d.selectedSubject !== "" && d.selectedFtype === "") {
 				files = d.files.filter(
 					(f) =>
-						f.subjectID ==
+						f.subjectID ===
 						d.selectedSubject.toString().split(":")[1]
 				);
 			}
 			//for file type and subject both together selected
-			else if (d.selectedFtype == "ppt" && d.selectedSubject == "") {
+			else if (d.selectedFtype === "ppt" && d.selectedSubject === "") {
 				files = d.files.filter(
-					(f) => f.fileName.toString().split(".")[1] == "pptx"
+					(f) => f.fileName.toString().split(".")[1] === "pptx"
 				);
-			} else if (d.selectedFtype == "txt" && d.selectedSubject == "") {
+			} else if (d.selectedFtype === "txt" && d.selectedSubject === "") {
 				files = d.files.filter(
-					(f) => f.fileName.toString().split(".")[1] == "txt"
+					(f) => f.fileName.toString().split(".")[1] === "txt"
 				);
-			} else if (d.selectedFtype == "pdf" && d.selectedSubject == "") {
+			} else if (d.selectedFtype === "pdf" && d.selectedSubject === "") {
 				files = d.files.filter(
-					(f) => f.fileName.toString().split(".")[1] == "pdf"
+					(f) => f.fileName.toString().split(".")[1] === "pdf"
 				);
 			}
 			//for only file type selection
-			else if (d.selectedFtype == "ppt" && d.selectedSubject !== "") {
+			else if (d.selectedFtype === "ppt" && d.selectedSubject !== "") {
 				files = d.files.filter(
 					(f) =>
-						f.fileName.toString().split(".")[1] == "pptx" &&
-						f.subjectID ==
+						f.fileName.toString().split(".")[1] === "pptx" &&
+						f.subjectID ===
 							d.selectedSubject.toString().split(":")[1]
 				);
-			} else if (d.selectedFtype == "txt" && d.selectedSubject !== "") {
+			} else if (d.selectedFtype === "txt" && d.selectedSubject !== "") {
 				files = d.files.filter(
 					(f) =>
-						f.fileName.toString().split(".")[1] == "txt" &&
-						f.subjectID ==
+						f.fileName.toString().split(".")[1] === "txt" &&
+						f.subjectID ===
 							d.selectedSubject.toString().split(":")[1]
 				);
-			} else if (d.selectedFtype == "pdf" && d.selectedSubject !== "") {
+			} else if (d.selectedFtype === "pdf" && d.selectedSubject !== "") {
 				files = d.files.filter(
 					(f) =>
-						f.fileName.toString().split(".")[1] == "pdf" &&
-						f.subjectID ==
+						f.fileName.toString().split(".")[1] === "pdf" &&
+						f.subjectID ===
 							d.selectedSubject.toString().split(":")[1]
 				);
 			}
-
-			//else
 			else {
 				files = d.files;
 			}
@@ -358,7 +374,7 @@ export default class FileApproval extends Component {
 						<br />
 						<div
 							className="faculty-subjectCard-header"
-							style={{ marginLeft: "250px" }}
+							style={{ marginLeft: "250px", marginTop:"24px" }}
 						>
 							<div style={{ flex: 1, marginLeft: "20px" }}>
 								FileName
@@ -380,7 +396,7 @@ export default class FileApproval extends Component {
 								Reject
 							</div>
 						</div>
-						);
+						
 						{files.map((f) => (
 							<div
 								className="faculty-subjectCard"
@@ -400,7 +416,7 @@ export default class FileApproval extends Component {
 										textDecoration: "none"
 									}}
 								>
-									{`Open`}
+
 									<img
 										src={Open}
 										width="25"
@@ -411,27 +427,31 @@ export default class FileApproval extends Component {
 										}}
 									/>
 								</a>
-								<a
-									href={`http://localhost:8000${f.file}`}
-									style={{ flex: 1, marginLeft: "20px" }}
-									download={f.file}
+								<h5									
+                  onClick={(e) =>
+                    this.downloadFile(
+                      e,
+                      f.fileName.split(".")[0],
+                      f.id
+                    )
+                  }
 									style={{
 										flex: 1,
 										marginLeft: "20px",
 										textDecoration: "none"
 									}}
 								>
-									{`Download${f.id}`}
 									<img
 										src={download}
 										width="25"
 										height="25"
 										alt="Logo"
+                    
 										style={{
 											marginLeft: "10px"
 										}}
 									/>
-								</a>
+								</h5>
 
 								<div
 									style={{ flex: 0, marginRight: "70px" }}

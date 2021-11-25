@@ -59,7 +59,7 @@ class FilterStudent extends Component {
 					<div style={{ flex: 0, marginRight: "20px" }}>Delete</div>
 				</div>
 				{data.map((s) => (
-					<div className="faculty-subjectCard">
+					<div className="faculty-subjectCard" key={s.enrollment}>
 						<>
 							<div style={{ flex: 1, marginLeft: "20px" }}>
 								{s.enrollment}
@@ -73,7 +73,7 @@ class FilterStudent extends Component {
 								{s.mobile}
 							</div>
 
-							<div style={{ flex: 1.03, marginRight: "16px" }}>
+							<div style={{ flex: 1, marginRight: "16px" }}>
 								{s.email}
 							</div>
 

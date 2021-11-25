@@ -20,6 +20,7 @@ import StudentPanel from "./components/StudentPanel";
 import StudentFileUpload from "./components/StudentFileUpload";
 import FileApproval from "./components/FileApproval";
 import ReviewFiles from "./components/ReviewFiles";
+import SendMail from "./components/SendMail";
 
 class App extends Component {
 	render() {
@@ -56,6 +57,13 @@ class App extends Component {
 							<AdminHeader />
 							<AdminHome />
 							<Footer />
+						</Route>
+
+						{/* send mail */}
+						<Route path="/sendMail">
+							<AdminHeader/>
+							<SendMail/>
+							<Footer/>
 						</Route>
 
 						<Route path="/addsubjects">

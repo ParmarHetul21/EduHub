@@ -51,6 +51,7 @@ class Login extends Component {
 					alert("wrong credentials");
 				}
 			});
+
 		setTimeout(() => {
 			fetch(
 				`http://localhost:8000/auth/currentStudent/${localStorage.getItem(
@@ -64,16 +65,13 @@ class Login extends Component {
 				}
 			)
 				.then((res) => res.json())
-				.then((data) =>
-					this.setState(
-						{ passwordStatus: data[0].passwordStatus },
-						() => {
-							console.log(
-								"this is status of password",
-								this.state.passwordStatus
-							);
-						}
-					)
+				.then((data) => {
+					if(data[0]){
+					if(data[0].is_staff === false){
+						this.setState({ passwordStatus: data[0].passwordStatus })
+					}
+				}
+				}
 				);
 		}, 700);
 	};
@@ -100,9 +98,9 @@ class Login extends Component {
 				return <Redirect to="/admin_home" />;
 			} else if (this.state.is_staff && !this.state.is_superuser) {
 				return <Redirect to="/faculty_home" />;
-			} else if (this.state.passwordStatus == true) {
+			} else if (this.state.passwordStatus === true) {
 				return <Redirect to="/" />;
-			} else if (this.state.passwordStatus == false) {
+			} else if (this.state.passwordStatus === false) {
 				return <Redirect to="/setPassword" />;
 			}
 		}

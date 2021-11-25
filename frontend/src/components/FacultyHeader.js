@@ -82,6 +82,7 @@ class Faculty_header extends Component {
 								</Dropdown.Item>
 							</Dropdown.Menu>
 						</Dropdown>
+					 	
 						<Link
 							className="px-4 h5 text-light text-decoration-none"
 							to="/login"
@@ -90,6 +91,7 @@ class Faculty_header extends Component {
 						>
 							Logout
 						</Link>
+						
 					</Nav>
 				</Navbar>
 			</div>

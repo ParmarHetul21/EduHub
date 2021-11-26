@@ -6,6 +6,7 @@ class Subject(models.Model):
     subjectname = models.CharField( max_length=150 )
     course = models.CharField( max_length = 150, default="MCA" )
     semester = models.IntegerField()
+    batch = models.CharField(max_length=150,null=True)
 
     def __str__(self):
         return self.subjectname

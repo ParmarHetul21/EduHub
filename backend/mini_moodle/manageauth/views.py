@@ -187,7 +187,8 @@ class SubjectList(APIView):
         serializer = SubjectSerializer(data=request.data)
         if serializer.is_valid():
             subjectname = serializer.validated_data['subjectname']
-            addsubject = Subject.objects.filter(subjectname = subjectname)
+            batch = serializer.validated_data['batch']
+            addsubject = Subject.objects.filter(subjectname = subjectname,batch=batch)
             if not addsubject:
                 serializer.save()
             else:
